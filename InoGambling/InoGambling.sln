@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Core", "InoGambling.Core\InoGambling.Core.csproj", "{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Slack", "InoGambling.Slack\InoGambling.Slack.csproj", "{1B63EDE4-7BB9-47F1-8090-54BCFA7E3FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.YouTrack", "InoGambling.YouTrack\InoGambling.YouTrack.csproj", "{39FDE3A7-CDAC-4C09-9AC1-DE77C3928632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data", "InoGambling.Data\InoGambling.Data.csproj", "{55944BF7-2852-45BB-901F-993F621D6156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.CommonMessages", "InoGambling.CommonMessages\InoGambling.CommonMessages.csproj", "{794353D9-FC3E-4943-90C2-2AAE31BB9967}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B63EDE4-7BB9-47F1-8090-54BCFA7E3FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B63EDE4-7BB9-47F1-8090-54BCFA7E3FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B63EDE4-7BB9-47F1-8090-54BCFA7E3FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B63EDE4-7BB9-47F1-8090-54BCFA7E3FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39FDE3A7-CDAC-4C09-9AC1-DE77C3928632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39FDE3A7-CDAC-4C09-9AC1-DE77C3928632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39FDE3A7-CDAC-4C09-9AC1-DE77C3928632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39FDE3A7-CDAC-4C09-9AC1-DE77C3928632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55944BF7-2852-45BB-901F-993F621D6156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55944BF7-2852-45BB-901F-993F621D6156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55944BF7-2852-45BB-901F-993F621D6156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55944BF7-2852-45BB-901F-993F621D6156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://creadth.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = InoGambling.Core\\InoGambling.Core.csproj
+		SccProjectName1 = InoGambling.Core
+		SccLocalPath1 = InoGambling.Core
+		SccProjectUniqueName2 = InoGambling.Slack\\InoGambling.Slack.csproj
+		SccProjectName2 = InoGambling.Slack
+		SccLocalPath2 = InoGambling.Slack
+		SccProjectUniqueName3 = InoGambling.YouTrack\\InoGambling.YouTrack.csproj
+		SccProjectName3 = InoGambling.YouTrack
+		SccLocalPath3 = InoGambling.YouTrack
+		SccProjectUniqueName4 = InoGambling.Data\\InoGambling.Data.csproj
+		SccProjectName4 = InoGambling.Data
+		SccLocalPath4 = InoGambling.Data
+		SccProjectUniqueName5 = InoGambling.CommonMessages\\InoGambling.CommonMessages.csproj
+		SccProjectName5 = InoGambling.CommonMessages
+		SccLocalPath5 = InoGambling.CommonMessages
+	EndGlobalSection
+EndGlobal
