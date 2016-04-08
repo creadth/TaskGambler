@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Core", "InoGambling.Core\InoGambling.Core.csproj", "{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data", "InoGambling.Data\InoGambling.Data.csproj", "{55944BF7-2852-45BB-901F-993F621D6156}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.CommonMessages", "InoGambling.CommonMessages\InoGambling.CommonMessages.csproj", "{794353D9-FC3E-4943-90C2-2AAE31BB9967}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data.Test", "InoGambling.Data.Test\InoGambling.Data.Test.csproj", "{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,12 +41,16 @@ Global
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://creadth.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -63,5 +69,8 @@ Global
 		SccProjectUniqueName5 = InoGambling.CommonMessages\\InoGambling.CommonMessages.csproj
 		SccProjectName5 = InoGambling.CommonMessages
 		SccLocalPath5 = InoGambling.CommonMessages
+		SccProjectUniqueName6 = InoGambling.Data.Test\\InoGambling.Data.Test.csproj
+		SccProjectName6 = InoGambling.Data.Test
+		SccLocalPath6 = InoGambling.Data.Test
 	EndGlobalSection
 EndGlobal
