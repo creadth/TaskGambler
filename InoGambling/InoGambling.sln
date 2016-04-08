@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data", "InoGamb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.CommonMessages", "InoGambling.CommonMessages\InoGambling.CommonMessages.csproj", "{794353D9-FC3E-4943-90C2-2AAE31BB9967}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Framework", "InoGambling.Framework\InoGambling.Framework.csproj", "{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.YouTrack.Zapuskator", "InoGambling.YouTrack.Zapuskator\InoGambling.YouTrack.Zapuskator.csproj", "{F6430944-F79F-4084-BE1F-5E10A6B9CC6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Core.Zapuskator", "InoGambling.Core.Zapuskator\InoGambling.Core.Zapuskator.csproj", "{D6C0C248-B251-4ED7-8B5C-E72ED90F550D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Slack.Zapuskator", "InoGambling.Slack.Zapuskator\InoGambling.Slack.Zapuskator.csproj", "{1867F697-B478-49C6-B7CB-86850B3E470E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data.Test", "InoGambling.Data.Test\InoGambling.Data.Test.csproj", "{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}"
 EndProject
 Global
@@ -41,6 +49,22 @@ Global
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{794353D9-FC3E-4943-90C2-2AAE31BB9967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6430944-F79F-4084-BE1F-5E10A6B9CC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6430944-F79F-4084-BE1F-5E10A6B9CC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6430944-F79F-4084-BE1F-5E10A6B9CC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6430944-F79F-4084-BE1F-5E10A6B9CC6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C0C248-B251-4ED7-8B5C-E72ED90F550D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C0C248-B251-4ED7-8B5C-E72ED90F550D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C0C248-B251-4ED7-8B5C-E72ED90F550D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C0C248-B251-4ED7-8B5C-E72ED90F550D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1867F697-B478-49C6-B7CB-86850B3E470E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1867F697-B478-49C6-B7CB-86850B3E470E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1867F697-B478-49C6-B7CB-86850B3E470E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1867F697-B478-49C6-B7CB-86850B3E470E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,7 +74,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://creadth.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -69,6 +93,18 @@ Global
 		SccProjectUniqueName5 = InoGambling.CommonMessages\\InoGambling.CommonMessages.csproj
 		SccProjectName5 = InoGambling.CommonMessages
 		SccLocalPath5 = InoGambling.CommonMessages
+		SccProjectUniqueName6 = InoGambling.Framework\\InoGambling.Framework.csproj
+		SccProjectName6 = InoGambling.Framework
+		SccLocalPath6 = InoGambling.Framework
+		SccProjectUniqueName7 = InoGambling.YouTrack.Zapuskator\\InoGambling.YouTrack.Zapuskator.csproj
+		SccProjectName7 = InoGambling.YouTrack.Zapuskator
+		SccLocalPath7 = InoGambling.YouTrack.Zapuskator
+		SccProjectUniqueName8 = InoGambling.Core.Zapuskator\\InoGambling.Core.Zapuskator.csproj
+		SccProjectName8 = InoGambling.Core.Zapuskator
+		SccLocalPath8 = InoGambling.Core.Zapuskator
+		SccProjectUniqueName9 = InoGambling.Slack.Zapuskator\\InoGambling.Slack.Zapuskator.csproj
+		SccProjectName9 = InoGambling.Slack.Zapuskator
+		SccLocalPath9 = InoGambling.Slack.Zapuskator
 		SccProjectUniqueName6 = InoGambling.Data.Test\\InoGambling.Data.Test.csproj
 		SccProjectName6 = InoGambling.Data.Test
 		SccLocalPath6 = InoGambling.Data.Test
