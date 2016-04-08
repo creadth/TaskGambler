@@ -2,7 +2,7 @@
 
 namespace InoGambling.Data.Repositories.Impl
 {
-    class UserRepositoryImpl : RepositoryImpl<User>, IUserRepository
+    public class UserRepositoryImpl : RepositoryImpl<User>, IUserRepository
     {
         public UserRepositoryImpl(IDataContextFactory factory) : base(factory)
         {

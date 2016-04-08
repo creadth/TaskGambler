@@ -7,7 +7,7 @@ using InoGambling.Data.Models;
 
 namespace InoGambling.Data.Repositories.Impl
 {
-    abstract class RepositoryImpl<TEntity> : IRepository<TEntity> where TEntity : EntityBase
+    public abstract class RepositoryImpl<TEntity> : IRepository<TEntity> where TEntity : EntityBase
     {
         protected RepositoryImpl(IDataContextFactory factory)
         {

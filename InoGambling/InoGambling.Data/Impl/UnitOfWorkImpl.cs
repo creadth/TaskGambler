@@ -7,7 +7,7 @@ using InoGambling.Data.Repositories;
 
 namespace InoGambling.Data.Impl
 {
-    class UnitOfWorkImpl : IUnitOfWork
+    public class UnitOfWorkImpl : IUnitOfWork
     {
         public UnitOfWorkImpl(IDataContextFactory factory)
         {

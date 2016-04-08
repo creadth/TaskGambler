@@ -19,7 +19,7 @@ namespace InoGambling.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ProjectConfiguration());
-            modelBuilder.Configurations.Add(new TaskConfiguration());
+            modelBuilder.Configurations.Add(new TicketConfiguration());
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new IntegrationUserConfiguration());
             modelBuilder.Configurations.Add(new BetConfiguration());

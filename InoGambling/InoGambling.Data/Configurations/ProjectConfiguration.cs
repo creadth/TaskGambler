@@ -15,8 +15,9 @@ namespace InoGambling.Data.Configurations
             Property(x => x.ProjectName).HasMaxLength(512).IsRequired();
             Property(x => x.IsArchive).IsRequired();
             Property(x => x.IsForbidden).IsRequired();
+            Property(x => x.IntegrationType).IsRequired();
 
-            HasMany(x => x.Tasks).WithRequired().HasForeignKey(x => x.ProjectId).WillCascadeOnDelete();
+            HasMany(x => x.Tickets).WithRequired().HasForeignKey(x => x.ProjectId).WillCascadeOnDelete();
         }
     }
 }

@@ -79,17 +79,32 @@
     <Compile Include="ConfigureEndpoint.cs" />
     <Compile Include="Handlers\SimpleMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Bets\IBetService.cs" />
+    <Compile Include="Services\Bets\Models\CancelBetResult.cs" />
+    <Compile Include="Services\Bets\Models\MakeBetResult.cs" />
+    <Compile Include="Services\Tickets\ITicketService.cs" />
+    <Compile Include="Services\Tickets\Models\CreateTicketResult.cs" />
+    <Compile Include="Services\Tickets\Models\UpdateTicketResult.cs" />
+    <Compile Include="Services\Users\IUserService.cs" />
+    <Compile Include="Services\Users\Models\CreateIntegrationUserResult.cs" />
+    <Compile Include="Services\Users\Models\UserCreateResult.cs" />
+    <Compile Include="Services\Users\Models\UserLoginResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\InoGambling.CommonMessages\InoGambling.CommonMessages.csproj">
-      <Project>{794353D9-FC3E-4943-90C2-2AAE31BB9967}</Project>
+      <Project>{794353d9-fc3e-4943-90c2-2aae31bb9967}</Project>
       <Name>InoGambling.CommonMessages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InoGambling.Data\InoGambling.Data.csproj">
+      <Project>{55944bf7-2852-45bb-901f-993f621d6156}</Project>
+      <Name>InoGambling.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InoGambling.Framework\InoGambling.Framework.csproj">
-      <Project>{98773346-A6C3-4FFF-A2E1-318C20ED3E0D}</Project>
+      <Project>{98773346-a6c3-4fff-a2e1-318c20ed3e0d}</Project>
       <Name>InoGambling.Framework</Name>
     </ProjectReference>
   </ItemGroup>

@@ -10,7 +10,7 @@ namespace InoGambling.Data.Models
 
         public virtual Double Points { get; set; }
 
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<Bet> Bets { get; set; }
         public virtual ICollection<IntegrationUser> IntegrationUsers { get; set; }
 

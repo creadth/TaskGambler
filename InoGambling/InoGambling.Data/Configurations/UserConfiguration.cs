@@ -16,7 +16,7 @@ namespace InoGambling.Data.Configurations
             Property(x => x.Points).IsRequired();
 
             HasMany(x => x.Bets).WithRequired().HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);
-            HasMany(x => x.Tasks).WithRequired().HasForeignKey(x => x.AssigneeUserId).WillCascadeOnDelete(false);
+            HasMany(x => x.Tickets).WithRequired().HasForeignKey(x => x.AssigneeUserId).WillCascadeOnDelete(false);
             HasMany(x => x.IntegrationUsers).WithRequired().HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);
         }
     }

@@ -74,29 +74,29 @@ namespace InoGambling.Data
                     integrationUser2Slack,
                     integrationUser2Youtrack);
 
-                var task = new Task()
+                var task = new Ticket()
                 {
                     AssigneeUserId = user1.Id,
                     ProjectId = project.Id,
                     ShortId = "TST-1",
-                    State = TaskState.Created,
+                    State = TicketState.Created,
                     Estimate = 5
                 };
 
-                context.Set<Task>().AddOrUpdate(x => x.ShortId, task);
+                context.Set<Ticket>().AddOrUpdate(x => x.ShortId, task);
 
                 context.SaveChanges();
 
-                task = context.Set<Task>().FirstOrDefault(x => x.ShortId == "TST-1");
+                task = context.Set<Ticket>().FirstOrDefault(x => x.ShortId == "TST-1");
 
                 var bet = new Bet()
                 {
                     UserId = user2.Id,
-                    TaskId = task.Id,
+                    TicketId = task.Id,
                     Estimate = 4,
                     Points = 100
                 };
-                context.Set<Bet>().AddOrUpdate(x => new {x.UserId, x.TaskId}, bet);
+                context.Set<Bet>().AddOrUpdate(x => new {x.UserId, TaskId = x.TicketId}, bet);
 
                 context.SaveChanges();
             }

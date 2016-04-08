@@ -1,6 +1,6 @@
 ﻿namespace InoGambling.Data.Impl
 {
-    class DataContextFactoryImpl : IDataContextFactory
+    public class DataContextFactoryImpl : IDataContextFactory
     {
         public InoGamblingDbContext GetDbContext()
         {

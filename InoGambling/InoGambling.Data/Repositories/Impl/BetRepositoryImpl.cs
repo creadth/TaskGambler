@@ -2,7 +2,7 @@
 
 namespace InoGambling.Data.Repositories.Impl
 {
-    class BetRepositoryImpl : RepositoryImpl<Bet>, IBetRepository
+    public class BetRepositoryImpl : RepositoryImpl<Bet>, IBetRepository
     {
         public BetRepositoryImpl(IDataContextFactory factory) : base(factory)
         {
