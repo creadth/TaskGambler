@@ -1,6 +1,6 @@
 ﻿
 using System.Linq;
-using InoGambling.Data.Models;
+using InoGambling.Data.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InoGambling.Data.Test

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InoGambling.Core.Services.Bets.Models;
-using InoGambling.Data.Models;
+using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Bets
 {

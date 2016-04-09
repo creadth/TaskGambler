@@ -1,4 +1,4 @@
-﻿using InoGambling.Data.Models;
+﻿using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Bets.Models
 {
@@ -15,5 +15,7 @@ namespace InoGambling.Core.Services.Bets.Models
         UserNotExists = 2,
         ProjectNotExists = 3,
         TaskNotExists = 4,
+
+        Error = 100,
     }
 }

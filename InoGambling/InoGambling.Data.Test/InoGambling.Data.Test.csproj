@@ -72,6 +72,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InoGambling.Data.Model\InoGambling.Data.Model.csproj">
+      <Project>{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}</Project>
+      <Name>InoGambling.Data.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InoGambling.Data\InoGambling.Data.csproj">
       <Project>{55944bf7-2852-45bb-901f-993f621d6156}</Project>
       <Name>InoGambling.Data</Name>

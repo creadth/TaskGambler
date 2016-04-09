@@ -1,4 +1,4 @@
-﻿using InoGambling.Data.Models;
+﻿using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Tickets.Models
 {
@@ -14,5 +14,7 @@ namespace InoGambling.Core.Services.Tickets.Models
         TicketExists = 1,
         ProjectNotExists = 2,
         UserNotExists = 3,
+
+        Error = 100,
     }
 }

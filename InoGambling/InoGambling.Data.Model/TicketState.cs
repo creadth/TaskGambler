@@ -1,4 +1,4 @@
-﻿namespace InoGambling.Data.Models
+﻿namespace InoGambling.Data.Model
 {
     public enum TicketState : byte
     {

@@ -1,4 +1,4 @@
-﻿using InoGambling.Data.Models;
+﻿using InoGambling.Data.Model;
 
 namespace InoGambling.Data.Repositories.Impl
 {

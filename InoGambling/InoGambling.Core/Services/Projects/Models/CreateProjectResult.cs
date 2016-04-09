@@ -1,4 +1,4 @@
-﻿using InoGambling.Data.Models;
+﻿using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Projects.Models
 {
@@ -12,5 +12,7 @@ namespace InoGambling.Core.Services.Projects.Models
     {
         Ok = 0,
         ProjectExists = 1,
+
+        Error = 100,
     }
 }

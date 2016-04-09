@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace InoGambling.Data.Models
+namespace InoGambling.Data.Model
 {
     public class Ticket : EntityBase
     {

@@ -1,4 +1,4 @@
-﻿using InoGambling.Data.Models;
+﻿using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Users.Models
 {
@@ -13,5 +13,7 @@ namespace InoGambling.Core.Services.Users.Models
         Ok = 0,
         UserNotExists = 1,
         IntegrationUserExists = 2,
+
+        Error = 100,
     }
 }

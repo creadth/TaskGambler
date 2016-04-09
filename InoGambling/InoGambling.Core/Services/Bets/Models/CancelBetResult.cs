@@ -12,5 +12,7 @@
         UserNotExists = 2,
         ProjectNotExists = 3,
         TaskNotExists = 4,
+
+        Error = 100,
     }
 }

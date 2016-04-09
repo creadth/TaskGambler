@@ -1,7 +1,6 @@
 ﻿using System;
 
-
-namespace InoGambling.Data.Models
+namespace InoGambling.Data.Model
 {
     public class EntityBase
     {
