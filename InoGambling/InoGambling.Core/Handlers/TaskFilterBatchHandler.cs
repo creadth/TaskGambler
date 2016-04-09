@@ -16,6 +16,11 @@ namespace InoGambling.Core.Handlers
         public void Handle(TaskFilterBatchCommand message)
         {
 #if DEBUG
+            Console.WriteLine($"Integration {message.Integration} tickets received:");
+            foreach (var ticket in message.Tickets)
+            {
+                Console.WriteLine($"{ticket.ShortId} ({ticket.ProjectShortId}) WIP by {ticket.AssigneeName} is {ticket.State} at {ticket.UpdatedTime}");
+            }
 #endif
         }
     }
