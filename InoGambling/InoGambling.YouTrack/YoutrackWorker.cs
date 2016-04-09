@@ -23,7 +23,7 @@ namespace InoGambling.YouTrack
         {
             Console.WriteLine("Sending...");
             //TODO: fix stab method. 
-            _bus.Send(new Address(C.CoreEndpoint, C.MachineName), new SimpleCommand
+            _bus.Send(_coreAddress, new SimpleCommand
             {
                 SomeShit = "Some piece of working shit. Really. Working nice and good. Ehehehe"
             });

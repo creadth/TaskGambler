@@ -16,11 +16,16 @@ namespace InoGambling.Core.Services.Bets
         Task<MakeBetResult> MakeBet(
             IntegrationType integration, 
             String userName, 
-            String projectShortId, 
             String taskShortId, 
             Double estimate, 
             Double points);
 
-        Task<CancelBetResult> CancelBet();
+        Task<CancelBetResult> CancelBet(
+            Int64 betId);
+
+        Task<CancelBetResult> CancelBet(
+            IntegrationType integration,
+            String userName,
+            String taskShortId);
     }
 }

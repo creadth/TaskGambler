@@ -16,7 +16,6 @@ namespace InoGambling.Core.Services.Tickets
 
         Task<CreateTicketResult> UpdateTicket(
             IntegrationType integration,
-            String projectShortId,
             String ticketShortId,
             String userName,
             String estimation,

@@ -82,11 +82,14 @@
     <Compile Include="Services\Bets\IBetService.cs" />
     <Compile Include="Services\Bets\Models\CancelBetResult.cs" />
     <Compile Include="Services\Bets\Models\MakeBetResult.cs" />
+    <Compile Include="Services\Projects\IProjectService.cs" />
+    <Compile Include="Services\Projects\Models\CreateProjectResult.cs" />
     <Compile Include="Services\Tickets\ITicketService.cs" />
     <Compile Include="Services\Tickets\Models\CreateTicketResult.cs" />
     <Compile Include="Services\Tickets\Models\UpdateTicketResult.cs" />
     <Compile Include="Services\Users\IUserService.cs" />
     <Compile Include="Services\Users\Models\CreateIntegrationUserResult.cs" />
+    <Compile Include="Services\Users\Models\UpdateIntegrationUserResult.cs" />
     <Compile Include="Services\Users\Models\UserCreateResult.cs" />
     <Compile Include="Services\Users\Models\UserLoginResult.cs" />
   </ItemGroup>

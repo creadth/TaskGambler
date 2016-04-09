@@ -6,6 +6,7 @@ namespace InoGambling.Data.Models
     {
         public virtual String Name { get; set; }
         public virtual IntegrationType Type { get; set; }
+        public virtual Boolean IsForbidden { get; set; }
         public virtual Int64 UserId { get; set; }
     }
 }

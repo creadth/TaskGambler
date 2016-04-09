@@ -13,6 +13,7 @@ namespace InoGambling.Data.Configurations
 
             Property(x => x.Name).HasMaxLength(256).IsRequired();
             Property(x => x.Type).IsRequired();
+            Property(x => x.IsForbidden).IsRequired();
         }
     }
 }
