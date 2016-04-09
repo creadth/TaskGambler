@@ -11,8 +11,8 @@ namespace InoGambling.Data.Configurations
 
             HasKey(x => x.Id);
 
-            Property(x => x.Login).HasMaxLength(50).IsRequired();
-            Property(x => x.Password).HasMaxLength(128).IsRequired();
+            Property(x => x.Login).HasMaxLength(50).IsOptional();//.IsRequired(); - fix for current slack user header role
+            Property(x => x.Password).HasMaxLength(128).IsOptional();//.IsRequired(); - fix for current slack user header role
             Property(x => x.Points).IsRequired();
 
             HasMany(x => x.Bets).WithRequired().HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);

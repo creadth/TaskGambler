@@ -209,10 +209,12 @@ namespace InoGambling.Core.Services.Bets.Impl
                     State = CancelBetState.Ok
                 };
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
-                throw;
+                return new CancelBetResult()
+                {
+                    State = CancelBetState.Error
+                };
             }
         }
 

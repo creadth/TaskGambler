@@ -17,7 +17,8 @@ namespace InoGambling.Data
 
                 var project = new Project()
                 {
-                    ShortId = "TST"
+                    ShortId = "TST",
+                    IntegrationType = IntegrationType.Youtrack
 
                 };
                 var user1 = new User()
@@ -81,7 +82,8 @@ namespace InoGambling.Data
                     State = TicketState.Created,
                     Estimate = 5,
                     LastUpdateDate = DateTime.Now,
-                    Link = "http://www.google.com"
+                    Link = "http://www.google.com",
+                    IntegrationType = IntegrationType.Youtrack
                 };
 
                 context.Set<Ticket>().AddOrUpdate(x => x.ShortId, task);
