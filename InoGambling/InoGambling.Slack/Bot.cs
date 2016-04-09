@@ -3,6 +3,7 @@ using InoGambling.Framework.Intergations.Messengers;
 using NServiceBus;
 using SlackAPI;
 using System;
+using InoGambling.CommonMessages.Commands.Integrations.Slack;
 using C = InoGambling.Framework.BeautifulConstants;
 
 namespace InoGambling.Slack

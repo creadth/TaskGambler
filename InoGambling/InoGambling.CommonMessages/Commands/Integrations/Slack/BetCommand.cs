@@ -1,11 +1,7 @@
-﻿using NServiceBus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using NServiceBus;
 
-namespace InoGambling.CommonMessages.Commands
+namespace InoGambling.CommonMessages.Commands.Integrations.Slack
 {
     /// <summary>
     /// User wants make a bet

@@ -49,9 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Integrations\Slack\BetCommandResponse.cs" />
     <Compile Include="Commands\Integrations\SyncTimeCommand.cs" />
     <Compile Include="Commands\Integrations\YouTrack\TaskFilterBatchCommand.cs" />
-    <Compile Include="Commands\BetCommand.cs" />
+    <Compile Include="Commands\Integrations\Slack\BetCommand.cs" />
     <Compile Include="Commands\SimpleCommand.cs" />
     <Compile Include="Configurations\ErrorMessageConfigProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
