@@ -10,7 +10,7 @@ namespace InoGambling.Data.Model
         public virtual DateTime? EndDate { get; set; }
         public virtual DateTime LastUpdateDate { get; set; }
         public virtual TicketState State { get; set; }
-        public virtual TimeSpan? ExecutionTime { get; set; }
+        public virtual TimeSpan ExecutionTime { get; set; }
         public virtual Double Estimate { get; set; }
         public virtual IntegrationType IntegrationType { get; set; }
         public virtual String Link { get; set; }

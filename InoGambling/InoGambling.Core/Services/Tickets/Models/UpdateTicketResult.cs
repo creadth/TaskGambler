@@ -1,11 +1,13 @@
-﻿using InoGambling.Data.Model;
+﻿using System.Collections.Generic;
+using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Tickets.Models
 {
     public class UpdateTicketResult
     {
         public UpdateTicketState State { get; set; }
-        public Ticket Task { get; set; }
+        public Ticket Ticket { get; set; }
+        public IEnumerable<Bet> InvalidatedBets { get; set; }
     }
 
     public enum UpdateTicketState : byte

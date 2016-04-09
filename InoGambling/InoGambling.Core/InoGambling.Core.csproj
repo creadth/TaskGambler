@@ -86,11 +86,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureEndpoint.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Handlers\SimpleMessageHandler.cs" />
     <Compile Include="Handlers\SyncTimeHandler.cs" />
     <Compile Include="Handlers\TaskFilterBatchHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Bets\IBetService.cs" />
+    <Compile Include="Services\Bets\Impl\BetServiceImpl.cs" />
     <Compile Include="Services\Bets\Models\CancelBetResult.cs" />
     <Compile Include="Services\Bets\Models\MakeBetResult.cs" />
     <Compile Include="Services\Projects\Impl\ProjectServiceImpl.cs" />

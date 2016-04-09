@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using InoGambling.Core.Services.Bets.Models;
 using InoGambling.Data.Model;
@@ -9,14 +11,14 @@ namespace InoGambling.Core.Services.Bets
     {
         Task<MakeBetResult> MakeBet(
             Int64 userId, 
-            Int64 taskId, 
+            Int64 ticketId, 
             Double estimate, 
             Double points);
 
         Task<MakeBetResult> MakeBet(
-            IntegrationType integration, 
+            IntegrationType integrationType, 
             String userName, 
-            String taskShortId, 
+            String ticketShortId, 
             Double estimate, 
             Double points);
 
@@ -24,8 +26,8 @@ namespace InoGambling.Core.Services.Bets
             Int64 betId);
 
         Task<CancelBetResult> CancelBet(
-            IntegrationType integration,
+            IntegrationType integrationType,
             String userName,
-            String taskShortId);
+            String ticketShortId);
     }
 }

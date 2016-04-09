@@ -14,7 +14,7 @@ namespace InoGambling.Core.Services.Bets.Models
         AllBetsAreOff = 1,
         UserNotExists = 2,
         ProjectNotExists = 3,
-        TaskNotExists = 4,
+        TicketNotExists = 4,
 
         Error = 100,
     }

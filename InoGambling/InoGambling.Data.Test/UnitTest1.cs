@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using InoGambling.Data.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,7 +14,17 @@ namespace InoGambling.Data.Test
         {
             var context = new InoGamblingDbContext();
 
-            var project = context.Set<Project>().FirstOrDefault();
+            try
+            {
+                var project = context.Set<Project>().FirstOrDefault();
+
+            }
+            catch (Exception e)
+            {
+
+                var tmp = e;
+            }
+            
         }
     }
 }

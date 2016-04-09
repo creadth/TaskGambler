@@ -34,6 +34,9 @@ namespace InoGambling.Core.Services.Tickets
             DateTime? startDate,
             DateTime? endDate);
 
+        Task<Boolean> IsTicketAllBetsAreOff(Int64 ticketId);
+        Task<Boolean> IsTicketAllBetsAreOff(IntegrationType integrationType, String ticketShortId);
+        Boolean IsTicketAllBetsAreOff(Ticket ticket);
 
     }
 }

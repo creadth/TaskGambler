@@ -80,7 +80,8 @@ namespace InoGambling.Data
                     ShortId = "TST-1",
                     State = TicketState.Created,
                     Estimate = 5,
-                    LastUpdateDate = DateTime.Now
+                    LastUpdateDate = DateTime.Now,
+                    Link = "http://www.google.com"
                 };
 
                 context.Set<Ticket>().AddOrUpdate(x => x.ShortId, task);

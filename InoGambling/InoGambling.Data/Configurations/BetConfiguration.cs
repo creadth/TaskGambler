@@ -13,6 +13,8 @@ namespace InoGambling.Data.Configurations
 
             Property(x => x.Points).IsRequired();
             Property(x => x.Estimate).IsRequired();
+            Property(x => x.IsInvalidate).IsRequired();
+            Property(x => x.IsCanceled);
         }
     }
 }
