@@ -15,5 +15,8 @@ namespace InoGambling.Framework
         public const string SlackEndpoint = "InoGambling.Slack";
 
         public const int TrackerSleepDelay = 3000;
+
+        //Slack bot constants
+        public const String BetWord = "Ставка";
     }
 }

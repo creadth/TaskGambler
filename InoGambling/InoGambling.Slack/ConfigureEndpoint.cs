@@ -8,6 +8,8 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NServiceBus;
 using C = InoGambling.Framework.BeautifulConstants;
+using InoGambling.Framework.Intergations.Messengers;
+using InoGambling.Slack;
 
 namespace InoGambling.YouTrack
 {
@@ -45,12 +47,24 @@ namespace InoGambling.YouTrack
             var locator = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);
             //configure dependencies here
+            container.RegisterType<ISlackIntegration, Bot>();
             //---------^_^------
             configuration.UseContainer<UnityBuilder>(c => c.UseExistingContainer(container));
         }
 
         public void Start()
         {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    using (var worker = ServiceLocator.Current.GetInstance<Bot>())
+                    {
+                        worker.Work();
+                    }
+                    Thread.Sleep(C.TrackerSleepDelay);
+                }
+            });
         }
 
         public void Stop()
