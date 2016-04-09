@@ -2,7 +2,7 @@
 
 namespace InoGambling.Core.Services.Tickets.Models
 {
-    class UpdateTicketResult
+    public class UpdateTicketResult
     {
         public UpdateTicketState State { get; set; }
         public Ticket Task { get; set; }

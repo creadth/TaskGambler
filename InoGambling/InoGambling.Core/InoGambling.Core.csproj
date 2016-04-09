@@ -93,8 +93,10 @@
     <Compile Include="Services\Bets\IBetService.cs" />
     <Compile Include="Services\Bets\Models\CancelBetResult.cs" />
     <Compile Include="Services\Bets\Models\MakeBetResult.cs" />
+    <Compile Include="Services\Projects\Impl\ProjectServiceImpl.cs" />
     <Compile Include="Services\Projects\IProjectService.cs" />
     <Compile Include="Services\Projects\Models\CreateProjectResult.cs" />
+    <Compile Include="Services\Tickets\Impl\TicketServiceImpl.cs" />
     <Compile Include="Services\Tickets\ITicketService.cs" />
     <Compile Include="Services\Tickets\Models\CreateTicketResult.cs" />
     <Compile Include="Services\Tickets\Models\UpdateTicketResult.cs" />
@@ -126,6 +128,10 @@
     <ProjectReference Include="..\InoGambling.Framework\InoGambling.Framework.csproj">
       <Project>{98773346-a6c3-4fff-a2e1-318c20ed3e0d}</Project>
       <Name>InoGambling.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InoGambling.YouTrack.Models\InoGambling.YouTrack.Models.csproj">
+      <Project>{273ab9f8-2eb2-4b42-8219-7996c2e0802d}</Project>
+      <Name>InoGambling.YouTrack.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

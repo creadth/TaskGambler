@@ -12,7 +12,6 @@ namespace InoGambling.Data.Configurations
             HasKey(x => x.Id);
 
             Property(x => x.ShortId).HasMaxLength(256).IsRequired();
-            Property(x => x.ProjectName).HasMaxLength(512).IsRequired();
             Property(x => x.IsArchive).IsRequired();
             Property(x => x.IsForbidden).IsRequired();
             Property(x => x.IntegrationType).IsRequired();

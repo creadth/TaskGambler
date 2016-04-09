@@ -17,8 +17,7 @@ namespace InoGambling.Data
 
                 var project = new Project()
                 {
-                    ShortId = "TST",
-                    ProjectName = "Test Project",
+                    ShortId = "TST"
 
                 };
                 var user1 = new User()
@@ -80,7 +79,8 @@ namespace InoGambling.Data
                     ProjectId = project.Id,
                     ShortId = "TST-1",
                     State = TicketState.Created,
-                    Estimate = 5
+                    Estimate = 5,
+                    LastUpdateDate = DateTime.Now
                 };
 
                 context.Set<Ticket>().AddOrUpdate(x => x.ShortId, task);

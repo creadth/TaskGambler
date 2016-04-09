@@ -7,9 +7,12 @@ namespace InoGambling.Core.Services.Projects
 {
     public interface IProjectService
     {
+        Task<Project> GetProject(
+            IntegrationType integrationType, 
+            String projectShortId);
+
         Task<CreateProjectResult> CreateProject(
-            IntegrationType integration, 
-            String projectShortName, 
-            String projectName);
+            IntegrationType integrationType, 
+            String projectShortId);
     }
 }

@@ -10,6 +10,7 @@ namespace InoGambling.Core.Services.Users
         Task<UserCreateResult> CreateUser(String login, String password);
         Task<User> GetUser(Int64 id, Boolean includeIntegrationUsers);
         Task<User> GetUser(String login, Boolean includeIntegrationUsers);
+        Task<User> GetUser(IntegrationType integrationType, String name);
         Task<UserLoginResult> UserLogin(String login, String password);
 
         Task<CreateIntegrationUserResult> CreateIntegrationUser(

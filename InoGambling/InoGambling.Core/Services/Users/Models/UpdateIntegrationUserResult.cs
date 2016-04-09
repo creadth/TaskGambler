@@ -1,7 +1,11 @@
-﻿namespace InoGambling.Core.Services.Users.Models
+﻿using InoGambling.Data.Model;
+
+namespace InoGambling.Core.Services.Users.Models
 {
     public class UpdateIntegrationUserResult
     {
+        public UpdateIntegrationUserState State { get; set; }
+        public IntegrationUser IntegrationUser { get; set; }
     }
 
     public enum UpdateIntegrationUserState : byte

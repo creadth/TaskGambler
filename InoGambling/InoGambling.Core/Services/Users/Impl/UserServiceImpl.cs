@@ -77,6 +77,14 @@ namespace InoGambling.Core.Services.Users.Impl
             return await query.FirstOrDefaultAsync(x => x.Login == login);
         }
 
+        public async Task<User> GetUser(IntegrationType integrationType, String name)
+        {
+            return await 
+                _userRepo.Query()
+                    .Include("IntegrationUsers")
+                    .FirstOrDefaultAsync(x => x.IntegrationUsers.Any(y => y.Type == integrationType && y.Name == name));
+        }
+
         public async Task<UserLoginResult> UserLogin(String login, String password)
         {
             try
@@ -124,7 +132,45 @@ namespace InoGambling.Core.Services.Users.Impl
             IntegrationType type,
             Boolean isForbidden)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await GetUser(userId, true);
+                if (user != null)
+                {
+                    if (user.IntegrationUsers.All(x => x.Type != type))
+                    {
+                        var integrationUser = _integrationUserRepo.Create();
+                        integrationUser.Name = integrationUserName;
+                        integrationUser.Type = type;
+                        integrationUser.UserId = user.Id;
+                        integrationUser.IsForbidden = true;
+                        integrationUser = _integrationUserRepo.Add(integrationUser);
+                        await _uow.CommitAsync();
+
+                        return new CreateIntegrationUserResult()
+                        {
+                            State = CreateIntegrationUserState.Ok,
+                            IntegrationUser = integrationUser
+                        };
+                    }
+                    return new CreateIntegrationUserResult()
+                    {
+                        State = CreateIntegrationUserState.IntegrationUserExists
+                    };
+                }
+                return new CreateIntegrationUserResult()
+                {
+                    State = CreateIntegrationUserState.UserNotExists
+                };
+
+            }
+            catch (Exception)
+            {
+                return new CreateIntegrationUserResult()
+                {
+                    State = CreateIntegrationUserState.Error
+                };
+            }
         }
 
         public async Task<UpdateIntegrationUserResult> UpdateIntegrationUser(
@@ -133,7 +179,43 @@ namespace InoGambling.Core.Services.Users.Impl
             IntegrationType type,
             Boolean isForbidden)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await GetUser(userId, true);
+                if (user != null)
+                {
+                    var integrationUser = user.IntegrationUsers.FirstOrDefault(x => x.Type == type);
+                    if (integrationUser != null)
+                    {
+                        integrationUser.Name = integrationUserName;
+                        integrationUser.IsForbidden = isForbidden;
+                        integrationUser = _integrationUserRepo.Update(integrationUser);
+                        await _uow.CommitAsync();
+
+                        return new UpdateIntegrationUserResult()
+                        {
+                            State = UpdateIntegrationUserState.Ok,
+                            IntegrationUser = integrationUser
+                        };
+                    }
+                    return new UpdateIntegrationUserResult()
+                    {
+                        State = UpdateIntegrationUserState.IntegrationUserNotExists
+                    };
+                }
+                return new UpdateIntegrationUserResult()
+                {
+                    State = UpdateIntegrationUserState.UserNotExists
+                };
+
+            }
+            catch (Exception)
+            {
+                return new UpdateIntegrationUserResult()
+                {
+                    State = UpdateIntegrationUserState.Error
+                };
+            }
         }
 
         private String GetPasswordHash(String password)

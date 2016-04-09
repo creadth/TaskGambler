@@ -6,7 +6,6 @@ namespace InoGambling.Data.Model
     public class Project : EntityBase
     {
         public virtual String ShortId { get; set; }
-        public virtual String ProjectName { get; set; }
         public virtual IntegrationType IntegrationType { get; set; }
 
         public virtual Boolean IsArchive { get; set; }

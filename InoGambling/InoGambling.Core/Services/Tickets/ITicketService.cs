@@ -5,21 +5,34 @@ using InoGambling.Data.Model;
 
 namespace InoGambling.Core.Services.Tickets
 {
-    public interface ITaskService
+    public interface ITicketService
     {
+        Task<Ticket> GetTicket(
+            Int64 id);
+
+        Task<Ticket> GetTicket(
+            IntegrationType integrationType,
+            String ticketShortId);
+
         Task<CreateTicketResult> CreateTicket(
-            IntegrationType integration,
+            IntegrationType integrationType,
             String projectShortId,
             String ticketShortId,
             String userName,
-            String estimation);
+            Double estimate,
+            String link,
+            DateTime createDate);
 
-        Task<CreateTicketResult> UpdateTicket(
-            IntegrationType integration,
+        Task<UpdateTicketResult> UpdateTicket(
+            IntegrationType integrationType,
             String ticketShortId,
             String userName,
-            String estimation,
-            TicketState state);
+            Double estimate,
+            TicketState state,
+            String link,
+            DateTime lastChangeDate,
+            DateTime? startDate,
+            DateTime? endDate);
 
 
     }
