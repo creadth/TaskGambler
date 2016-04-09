@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InoGambling.CommonMessages.Commands.Integrations.Slack;
 using InoGambling.Framework.Intergations.Messengers;
 using NServiceBus;
+using Microsoft.Practices.ServiceLocation;
 
 namespace InoGambling.Slack.Handlers
 {
@@ -27,7 +28,10 @@ namespace InoGambling.Slack.Handlers
 #if DEBUG
             Console.WriteLine($"Received bet command response from user <{message.Initiator}>");
 #endif
-            //TODO: send something via bot.
+            using (var worker = ServiceLocator.Current.GetInstance<Bot>())
+            {
+                worker.SendTasks(message);
+            }
         }
     }
 }

@@ -18,5 +18,6 @@ namespace InoGambling.Framework
 
         //Slack bot constants
         public const String BetWord = "Ставка";
+        public const String Want = "Хочу сделать ставку";
     }
 }

@@ -14,8 +14,8 @@ namespace InoGambling.CommonMessages.Commands.Integrations.Slack
         public string Initiator { get; set; }
 
         /// <summary>
-        /// TODO: add actual data instead of stab
+        /// All available tasks
         /// </summary>
-        public string SomeResponse { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
     }
 }
