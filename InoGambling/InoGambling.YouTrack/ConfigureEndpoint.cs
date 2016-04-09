@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using InoGambling.CommonMessages.Commands;
+using InoGambling.CommonMessages.Commands.Integrations;
+using InoGambling.Data.Model;
 using InoGambling.Framework;
 using InoGambling.Framework.Intergations.Trackers;
 using Microsoft.Practices.ServiceLocation;
@@ -52,16 +54,9 @@ namespace InoGambling.YouTrack
 
         public void Start()
         {
-            Task.Run(() =>
+            _bus.Send(new Address(C.CoreEndpoint, C.MachineName), new SyncTimeCommand
             {
-                while (true)
-                {
-                    using (var worker = ServiceLocator.Current.GetInstance<YoutrackWorker>())
-                    {
-                        worker.Work();
-                    }
-                    Thread.Sleep(C.TrackerSleepDelay);
-                }
+                Integration = IntegrationType.Youtrack
             });
         }
 

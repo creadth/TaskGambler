@@ -52,6 +52,12 @@
     <Compile Include="Intergations\Trackers\IYouTrackIntegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InoGambling.Data.Model\InoGambling.Data.Model.csproj">
+      <Project>{ff0eef5e-21da-4876-9a67-46e38a63b81e}</Project>
+      <Name>InoGambling.Data.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

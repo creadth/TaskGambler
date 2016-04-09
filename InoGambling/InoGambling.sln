@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Core", "InoGambling.Core\InoGambling.Core.csproj", "{19708CD7-B73B-4F1E-A805-EE6FEFF6A2FE}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data.Test", "InoGambling.Data.Test\InoGambling.Data.Test.csproj", "{6D253693-D74B-499D-B9BA-0D4D19D9DFB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.Data.Model", "InoGambling.Data.Model\InoGambling.Data.Model.csproj", "{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InoGambling.YouTrack.Models", "InoGambling.YouTrack.Models\InoGambling.YouTrack.Models.csproj", "{273AB9F8-2EB2-4B42-8219-7996C2E0802D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,12 +77,16 @@ Global
 		{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273AB9F8-2EB2-4B42-8219-7996C2E0802D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273AB9F8-2EB2-4B42-8219-7996C2E0802D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273AB9F8-2EB2-4B42-8219-7996C2E0802D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273AB9F8-2EB2-4B42-8219-7996C2E0802D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
+		SccNumberOfProjects = 13
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://creadth.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -117,5 +123,8 @@ Global
 		SccProjectUniqueName11 = InoGambling.Data.Model\\InoGambling.Data.Model.csproj
 		SccProjectName11 = InoGambling.Data.Model
 		SccLocalPath11 = InoGambling.Data.Model
+		SccProjectUniqueName12 = InoGambling.YouTrack.Models\\InoGambling.YouTrack.Models.csproj
+		SccProjectName12 = InoGambling.YouTrack.Models
+		SccLocalPath12 = InoGambling.YouTrack.Models
 	EndGlobalSection
 EndGlobal

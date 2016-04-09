@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureEndpoint.cs" />
+    <Compile Include="Handlers\SyncTimeHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YoutrackWorker.cs" />
   </ItemGroup>
@@ -100,9 +101,17 @@
       <Project>{794353d9-fc3e-4943-90c2-2aae31bb9967}</Project>
       <Name>InoGambling.CommonMessages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InoGambling.Data.Model\InoGambling.Data.Model.csproj">
+      <Project>{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}</Project>
+      <Name>InoGambling.Data.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InoGambling.Framework\InoGambling.Framework.csproj">
       <Project>{98773346-a6c3-4fff-a2e1-318c20ed3e0d}</Project>
       <Name>InoGambling.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InoGambling.YouTrack.Models\InoGambling.YouTrack.Models.csproj">
+      <Project>{273ab9f8-2eb2-4b42-8219-7996c2e0802d}</Project>
+      <Name>InoGambling.YouTrack.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

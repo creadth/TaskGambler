@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Integrations\SyncTimeCommand.cs" />
+    <Compile Include="Commands\Integrations\YouTrack\TaskFilterBatchCommand.cs" />
     <Compile Include="Commands\SimpleCommand.cs" />
     <Compile Include="Configurations\ErrorMessageConfigProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,7 +58,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\InoGambling.Data.Model\InoGambling.Data.Model.csproj">
+      <Project>{FF0EEF5E-21DA-4876-9A67-46E38A63B81E}</Project>
+      <Name>InoGambling.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InoGambling.YouTrack.Models\InoGambling.YouTrack.Models.csproj">
+      <Project>{273ab9f8-2eb2-4b42-8219-7996c2e0802d}</Project>
+      <Name>InoGambling.YouTrack.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
