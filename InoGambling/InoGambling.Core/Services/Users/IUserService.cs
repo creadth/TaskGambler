@@ -17,12 +17,14 @@ namespace InoGambling.Core.Services.Users
         Task<CreateIntegrationUserResult> CreateIntegrationUser(
             Int64? userId,
             String integrationUserName,
+            String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden);
 
         Task<UpdateIntegrationUserResult> UpdateIntegrationUser(
             Int64 userId,
             String integrationUserName,
+            String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden);
 

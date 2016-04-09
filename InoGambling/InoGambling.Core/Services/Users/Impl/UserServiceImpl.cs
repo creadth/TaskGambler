@@ -152,6 +152,7 @@ namespace InoGambling.Core.Services.Users.Impl
         public async Task<CreateIntegrationUserResult> CreateIntegrationUser(
             Int64? userId,
             String integrationUserName,
+            String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden)
         {
@@ -185,6 +186,7 @@ namespace InoGambling.Core.Services.Users.Impl
                     {
                         var integrationUser = _integrationUserRepo.Create();
                         integrationUser.Name = integrationUserName;
+                        integrationUser.DisplayName = integrationUserDisplayName;
                         integrationUser.Type = type;
                         integrationUser.UserId = user.Id;
                         integrationUser.IsForbidden = true;
@@ -220,6 +222,7 @@ namespace InoGambling.Core.Services.Users.Impl
         public async Task<UpdateIntegrationUserResult> UpdateIntegrationUser(
             Int64 userId,
             String integrationUserName,
+            String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden)
         {
@@ -232,6 +235,7 @@ namespace InoGambling.Core.Services.Users.Impl
                     if (integrationUser != null)
                     {
                         integrationUser.Name = integrationUserName;
+                        integrationUser.DisplayName = integrationUserDisplayName;
                         integrationUser.IsForbidden = isForbidden;
                         integrationUser = _integrationUserRepo.Update(integrationUser);
                         await _uow.CommitAsync();
