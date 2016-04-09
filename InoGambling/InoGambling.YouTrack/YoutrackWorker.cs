@@ -67,7 +67,7 @@ namespace InoGambling.YouTrack
                     Integration = IntegrationType.Youtrack,
                     Tickets = tickets
                 });
-
+                syncTime = tickets.Max(x => x.UpdatedTime);
             }
             catch (Exception e)
             {
