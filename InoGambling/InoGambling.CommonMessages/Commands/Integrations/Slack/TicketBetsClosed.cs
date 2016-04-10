@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NServiceBus;
 
 namespace InoGambling.CommonMessages.Commands.Integrations.Slack
 {
@@ -10,6 +11,7 @@ namespace InoGambling.CommonMessages.Commands.Integrations.Slack
     /// Occurs when bets are no more accepted.
     /// </summary>
     public class TicketBetsClosed
+        :ICommand
     {
         public string TicketShortId { get; set; }
         public string AssigneeName { get; set; }
