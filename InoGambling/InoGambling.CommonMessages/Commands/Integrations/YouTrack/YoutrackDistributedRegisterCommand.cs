@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InoGambling.CommonMessages.Commands.Integrations.Slack;
+using NServiceBus;
 
 namespace InoGambling.CommonMessages.Commands.Integrations.YouTrack
 {
@@ -11,6 +12,7 @@ namespace InoGambling.CommonMessages.Commands.Integrations.YouTrack
     /// Distibuted to youtrack register command 
     /// </summary>
     public class YoutrackDistributedRegisterCommand
+        : ICommand
     {
         public string YouTrackLogin { get; set; }
         public string RegIntegrationUserId { get; set; }
