@@ -52,7 +52,7 @@ namespace InoGambling.Slack.Handlers
                 var greet = r.HasWon ? "Congratulations! You've been right" : "I regret to say, you've been wrong";
                 var amtGreet = r.HasWon ? "added to your account" :"kept your";
                 _bot.SendMessage(
-                    $"{greet} about <{message.TicketLink}|{message.TicketId}>. We have {amtGreet} {r.AmtChange} Points and your balance is currently {r.CurrentPoints}. Good luck next time!",
+                    $"{greet} about <{message.TicketLink}|{message.TicketId}>. We have {amtGreet} {Math.Abs(r.AmtChange)} Points and your balance is currently {r.CurrentPoints}. Good luck next time!",
                     r.UserId);
             }
         }

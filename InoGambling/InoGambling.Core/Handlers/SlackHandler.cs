@@ -183,7 +183,7 @@ namespace InoGambling.Core.Handlers
                     {
                         IsOk = true,
                         UserId = message.UserId,
-                        AdditionalMessage = $" your balance now is {np} Points. Good estimating!"
+                        AdditionalMessage = $" your balance now is {np} Points"
                     });
                 }
                 else
