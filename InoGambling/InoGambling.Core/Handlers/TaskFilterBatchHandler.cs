@@ -51,14 +51,13 @@ namespace InoGambling.Core.Handlers
             try {
                 foreach (var ticket in message.Tickets)
                 {
-                    var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, ticket.ShortId).Result;
+                    var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, ticket.ShortId);
                     if (tryTicket == null)
                     {
                         if (ticket.AssigneeName == null) continue;
                         if (ticket.Estimation == 0) continue;
                         if (_projectService
                             .CreateProject(IntegrationType.Youtrack, ticket.ProjectShortId)
-                            .Result
                             .State == CreateProjectState.Error)
                         {
                             continue;
@@ -67,7 +66,7 @@ namespace InoGambling.Core.Handlers
                         if (user == null)
                         {
                             if (_userService.CreateIntegrationUser(null, ticket.AssigneeName, ticket.AssigneeName,
-                                IntegrationType.Youtrack, false).Result.State == CreateIntegrationUserState.Error)
+                                IntegrationType.Youtrack, false).State == CreateIntegrationUserState.Error)
                             {
                                 continue;
                             }
@@ -81,7 +80,7 @@ namespace InoGambling.Core.Handlers
                             ticket.Link,
                             ticket.CreateTime,
                             Math.Ceiling(2d * ticket.Estimation / 60d)
-                            ).Result;
+                            );
                         if (res.State != CreateTicketState.Ok)
                         {
                             //TODO: log error?
@@ -115,13 +114,13 @@ namespace InoGambling.Core.Handlers
                         ticket.Link,
                         ticket.UpdatedTime,
                         null,
-                        null).Result;
+                        null);
                     //^ TODO: are we really need to pass here Start/End date?
 
 
                     if (ticket.State == TicketState.Verified && tryTicket.State != ticket.State)
                     {
-                        var res = _betService.PlayTicket(tryTicket.Id).Result;
+                        var res = _betService.PlayTicket(tryTicket.Id);
                         var results = res.PlayersResults.Select(x => new TicketResult
                         {
                             UserId = x.User.IntegrationUsers.FirstOrDefault(u => u.Type == IntegrationType.Slack)?.Name,

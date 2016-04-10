@@ -26,7 +26,7 @@ namespace InoGambling.Core.Handlers
 #if DEBUG
             Console.WriteLine($"Sync message from Integration {message.Integration}");
 #endif
-            message.SyncTime = _ticketService.GetSyncTime().Result;
+            message.SyncTime = _ticketService.GetSyncTime();
             _bus.Send(new Address(C.YouTrackEndpoint, C.MachineName), message);
         }
     }

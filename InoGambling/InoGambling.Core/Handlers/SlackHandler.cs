@@ -42,7 +42,7 @@ namespace InoGambling.Core.Handlers
 
         public void Handle(RegisterCommand message)
         {
-            var trySlackUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId).Result;
+            var trySlackUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId);
             if (trySlackUser != null)
             {
                 _bus.Send(_slackAddress, new RegisterResult
@@ -54,7 +54,7 @@ namespace InoGambling.Core.Handlers
                 return;
             }
             var tryYouTrackUser =
-                _userService.GetIntegrationUser(IntegrationType.Youtrack, message.YouTrackLogin).Result;
+                _userService.GetIntegrationUser(IntegrationType.Youtrack, message.YouTrackLogin);
             if (tryYouTrackUser == null)
             {
                 //Hard case. We need to retrieve youtrack user 
@@ -70,7 +70,7 @@ namespace InoGambling.Core.Handlers
                         message.YouTrackDisplayName,
                         IntegrationType.Youtrack,
                         false
-                        ).Result;
+                        );
                     if (youtrackRes.State != CreateIntegrationUserState.Ok)
                     {
                         SendUnknownErrorMessageForRegister(message.UserId);
@@ -91,7 +91,7 @@ namespace InoGambling.Core.Handlers
 
             }
             var res = _userService.CreateIntegrationUser(tryYouTrackUser.UserId, message.UserId, message.UserName,
-                IntegrationType.Slack, false).Result;
+                IntegrationType.Slack, false);
             if (res.State != CreateIntegrationUserState.Ok)
             {
                 SendUnknownErrorMessageForRegister(message.UserId);
@@ -119,7 +119,7 @@ namespace InoGambling.Core.Handlers
 
         public void Handle(BetCommand message)
         {
-            var tryUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId).Result;
+            var tryUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId);
             if (tryUser == null)
             {
                 _bus.Send(_slackAddress, new BetResponse
@@ -130,7 +130,7 @@ namespace InoGambling.Core.Handlers
                 });
                 return;
             }
-            var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, message.TaskShortId).Result;
+            var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, message.TaskShortId);
             if (tryTicket == null)
             {
                 _bus.Send(_slackAddress, new BetResponse
@@ -142,7 +142,7 @@ namespace InoGambling.Core.Handlers
             }
             else
             {
-                if (_ticketService.IsTicketAllBetsAreOff(IntegrationType.Youtrack, message.TaskShortId).Result)
+                if (_ticketService.IsTicketAllBetsAreOff(IntegrationType.Youtrack, message.TaskShortId))
                 {
                     _bus.Send(_slackAddress, new BetResponse
                     {
@@ -162,7 +162,7 @@ namespace InoGambling.Core.Handlers
                     });
                     return;                    
                 }
-                var normalUser = _userService.GetUser(tryUser.UserId).Result;
+                var normalUser = _userService.GetUser(tryUser.UserId);
                 if (normalUser.Points <= tryTicket.Points)
                 {
                     _bus.Send(_slackAddress, new BetResponse
@@ -173,9 +173,9 @@ namespace InoGambling.Core.Handlers
                     });
                     return;
                 }
-                var makeBetREsult = _betService
-                    .MakeBet(normalUser.Id, tryTicket.Id, tryTicket.Estimate, tryTicket.Points, !message.IsBetAgainst).Result;
-                if (makeBetREsult.State == MakeBetState.Ok)
+                var makeBetResult = _betService
+                    .MakeBet(normalUser.Id, tryTicket.Id, tryTicket.Estimate, tryTicket.Points, !message.IsBetAgainst);
+                if (makeBetResult.State == MakeBetState.Ok)
                 {
                     var np = normalUser.Points - tryTicket.Points;
                     _userService.UpdateUserPoints(normalUser.Id, np);
@@ -203,7 +203,7 @@ namespace InoGambling.Core.Handlers
 
         public void Handle(StatsCommand message)
         {
-            var tryUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId).Result;
+            var tryUser = _userService.GetIntegrationUser(IntegrationType.Slack, message.UserId);
             if (tryUser == null)
             {
                 message.IsOk = false;
@@ -211,7 +211,7 @@ namespace InoGambling.Core.Handlers
                 _bus.Send(_slackAddress, message);
                 return;
             }
-            var normalUser = _userService.GetUser(tryUser.UserId).Result;
+            var normalUser = _userService.GetUser(tryUser.UserId);
             message.IsOk = true;
             message.Points = normalUser.Points;
             _bus.Send(_slackAddress, message);
