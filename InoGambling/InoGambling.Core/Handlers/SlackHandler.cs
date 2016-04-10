@@ -26,12 +26,13 @@ namespace InoGambling.Core.Handlers
         private Address _slackAddress;
         private Address _youtrackAddress;
 
-        public SlackHandler(IBus bus, IUserService userService)
+        public SlackHandler(IBus bus, IUserService userService, ITicketService ticketService)
         {
             _bus = bus;
             _userService = userService;
             _slackAddress = new Address(C.SlackEndpoint, C.MachineName);
             _youtrackAddress = new Address(C.YouTrackEndpoint, C.MachineName);
+            _ticketService = ticketService;
         }
 
         public void Handle(RegisterCommand message)
