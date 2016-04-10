@@ -85,10 +85,12 @@ namespace InoGambling.Data.Test
         {
             try
             {
-                var projectService = ServiceLocator.Current.GetInstance<IProjectService>();
-                var tmp = await projectService.GetProject(IntegrationType.Youtrack, "TST");
-                var newProj1 = await projectService.CreateProject(IntegrationType.Youtrack, "TST");
-                var newProj2 = await projectService.CreateProject(IntegrationType.Youtrack, "TST1");
+                var userService = ServiceLocator.Current.GetInstance<IUserService>();
+                var integrationUserSlack =
+                    await userService.CreateIntegrationUser(null, "bla", "blabla", IntegrationType.Slack, false);
+
+                var integrationUserYoutrack =
+                    await userService.CreateIntegrationUser(integrationUserSlack.IntegrationUser.UserId, "bla", "blabla", IntegrationType.Youtrack, false);
             }
             catch (Exception e)
             {
