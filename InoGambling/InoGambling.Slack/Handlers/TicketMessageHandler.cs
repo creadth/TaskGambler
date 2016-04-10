@@ -41,7 +41,7 @@ namespace InoGambling.Slack.Handlers
             }
             else
             {
-                !_bot.SendBroadcast(
+                if(!_bot.SendBroadcast(
                     $"Bets for  <{message.LinkToTask}|{message.TicketShortId}> are not accepted anymore!"))
                 {
                     _bus.Defer(TimeSpan.FromSeconds(10), message);
