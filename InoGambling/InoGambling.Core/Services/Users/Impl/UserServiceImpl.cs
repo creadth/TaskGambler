@@ -57,6 +57,14 @@ namespace InoGambling.Core.Services.Users.Impl
             }
         }
 
+        public void UpdateUserPoints(Int64 userId, Double points)
+        {
+            var user = _userRepo.Query().FirstOrDefault(x => x.Id == userId);
+            user.Points = points;
+            _userRepo.Update(user);
+            _uow.Commit();
+        }
+
         public async Task<UserCreateResult> CreateUser()
         {
             try

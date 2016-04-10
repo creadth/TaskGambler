@@ -13,6 +13,7 @@ namespace InoGambling.Core.Services.Users
         Task<User> GetUser(String login, Boolean includeIntegrationUsers = false);
         Task<User> GetUser(IntegrationType integrationType, String name);
         Task<UserLoginResult> UserLogin(String login, String password);
+        void UpdateUserPoints(Int64 userId, Double points);
 
         Task<CreateIntegrationUserResult> CreateIntegrationUser(
             Int64? userId,
