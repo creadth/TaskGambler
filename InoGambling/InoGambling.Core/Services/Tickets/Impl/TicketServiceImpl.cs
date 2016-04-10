@@ -154,6 +154,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
                             case TicketState.InProgress:
                                 break;
                             case TicketState.OnHold:
+                            case TicketState.Verified:
                                 if (ticket.State == TicketState.InProgress)
                                 {
                                     ticket.ExecutionTime += lastChangeDate - ticket.LastUpdateDate; //not exactly correct, but for now it's best solution
@@ -166,6 +167,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
                         ticket.StartDate = startDate;
                         ticket.EndDate = endDate;
                         ticket.Link = link;
+                        ticket.LastUpdateDate = lastChangeDate;
 
                         _ticketRepo.Update(ticket);
 
@@ -234,8 +236,8 @@ namespace InoGambling.Core.Services.Tickets.Impl
                         }
                         //bullshit
                         var estimationHours = ticket.Estimate * Constants.ESTIMATE_COEF;
-                        var allBetsAreOffDeltaSeconds = (Int32)(estimationHours * Constants.ALL_BETS_ARE_OFF_DELTA_PERCENT * 3600);
-                        if (now - ticket.StartDate.Value > new TimeSpan(0, 0, 0, allBetsAreOffDeltaSeconds))
+                        var allBetsAreOffDeltaMinutes = (Int32)(ticket.Estimate * Constants.ALL_BETS_ARE_OFF_DELTA_PERCENT / 100);
+                        if (now - ticket.StartDate.Value > new TimeSpan(0, 0, allBetsAreOffDeltaMinutes, 0))
                         {
                             return true;
                         }

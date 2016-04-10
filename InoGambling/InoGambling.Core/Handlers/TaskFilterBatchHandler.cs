@@ -106,6 +106,8 @@ namespace InoGambling.Core.Handlers
                         continue;
                     }
 
+                    var oldState = tryTicket.State;
+
                     var updateResult = _ticketService.UpdateTicket(IntegrationType.Youtrack,
                         ticket.ShortId,
                         ticket.AssigneeName,
@@ -118,7 +120,7 @@ namespace InoGambling.Core.Handlers
                     //^ TODO: are we really need to pass here Start/End date?
 
 
-                    if (ticket.State == TicketState.Verified && tryTicket.State != ticket.State)
+                    if (ticket.State == TicketState.Verified && oldState != ticket.State)
                     {
                         var res = _betService.PlayTicket(tryTicket.Id);
                         var results = res.PlayersResults.Select(x => new TicketResult
@@ -137,7 +139,7 @@ namespace InoGambling.Core.Handlers
                         return;
                     }
 
-                    if (ticket.State == TicketState.InProgress && tryTicket.State != ticket.State)
+                    if (ticket.State == TicketState.InProgress && oldState != ticket.State)
                     {
 #if DEBUG
                         Console.WriteLine("Sending TicketBetsClosed command to slack...");

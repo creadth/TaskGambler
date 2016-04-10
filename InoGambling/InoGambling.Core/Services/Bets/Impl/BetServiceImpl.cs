@@ -286,13 +286,12 @@ namespace InoGambling.Core.Services.Bets.Impl
             var bets = _betRepo.Query().Where(x => x.TicketId == ticketId).ToArray();
 
             var pointsForAssignee = isWon
-                ? 2*ticket.Points + (ticket.Points*Constants.RAKE_PERCENT/100*bets.Count(x => !x.IsAgree)) : 0;
-            var pointsForAssigneeDisplay = isWon ? pointsForAssignee - ticket.Points : 0;
+                ? ticket.Points + (ticket.Points*Constants.RAKE_PERCENT/100*bets.Count(x => !x.IsAgree)) : 0;
+            var pointsForAssigneeDisplay = pointsForAssignee;
 
-            var pointsForWinners = isWon
-                ? 2 * ticket.Points : 0;
-            var pointsForWinnersDisplay = isWon ? ticket.Points : -ticket.Points;
-            var pointsForLoosersDisplay = isWon ? -ticket.Points : ticket.Points;
+            var pointsForWinners = 2 * ticket.Points;
+            var pointsForWinnersDisplay = ticket.Points;
+            var pointsForLoosersDisplay = -ticket.Points;
 
             var asssigneeUser = _userService.GetUser(ticket.AssigneeUserId);
             asssigneeUser.Points += pointsForAssignee;
@@ -316,7 +315,7 @@ namespace InoGambling.Core.Services.Bets.Impl
                 {
                     User =  user,
                     Win = userWon,
-                    PointsResult = userWon ? pointsForAssigneeDisplay : pointsForLoosersDisplay
+                    PointsResult = userWon ? pointsForWinnersDisplay : pointsForLoosersDisplay
                 });
 
             }

@@ -77,26 +77,6 @@ namespace InoGambling.Data.Test
         public void ServiceTest1()
         {
             RegisterUnityContainer();
-
-            ServiceTestASync().Wait();
-        }
-
-        protected async Task ServiceTestASync()
-        {
-            try
-            {
-                var userService = ServiceLocator.Current.GetInstance<IUserService>();
-                var integrationUserSlack =
-                    await userService.CreateIntegrationUser(null, "bla", "blabla", IntegrationType.Slack, false);
-
-                var integrationUserYoutrack =
-                    await userService.CreateIntegrationUser(integrationUserSlack.IntegrationUser.UserId, "bla", "blabla", IntegrationType.Youtrack, false);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            
         }
 
 

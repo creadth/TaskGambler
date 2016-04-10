@@ -123,8 +123,20 @@ namespace InoGambling.YouTrack
         /// </summary>
         protected void AuthYoutrack()
         {
-            _con = new Connection(YouTrackUrl, YouTrackPort);
-            _con.Authenticate(BotLogin, BotPwd);
+            while (true)
+            {
+                try
+                {
+                    _con = new Connection(YouTrackUrl, YouTrackPort);
+                    _con.Authenticate(BotLogin, BotPwd);
+                    return;
+                }
+                catch (Exception)
+                {
+                }
+                
+            }
+            
         }
 
         protected string BuildTicketUrl(string ticketShortId)
