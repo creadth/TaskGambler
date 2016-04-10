@@ -34,7 +34,7 @@ namespace InoGambling.Slack.Handlers
 
         public void Handle(TicketBetsClosed message)
         {
-            if (message.Delay.TotalMinutes > 1)
+            if (message.Delay.TotalSeconds > 1)
             {
                 var delay = message.Delay;
                 message.Delay = TimeSpan.Zero;
@@ -42,11 +42,7 @@ namespace InoGambling.Slack.Handlers
             }
             else
             {
-                if(!_bot.SendBroadcast(
-                    $"Bets for  <{message.LinkToTask}|{message.TicketShortId}> are not accepted anymore!"))
-                {
-                    _bus.Defer(TimeSpan.FromSeconds(10), message);
-                }
+                _bot.SendBroadcast($"Bets for  <{message.LinkToTask}|{message.TicketShortId}> are not accepted anymore!");
             }
         }
     }
