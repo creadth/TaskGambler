@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Linq;
@@ -286,6 +287,11 @@ namespace InoGambling.Core.Services.Users.Impl
         public IntegrationUser GetIntegrationUser(Int64 integrationUserId)
         {
             return _integrationUserRepo.GetById(integrationUserId);
+        }
+
+        public IEnumerable<User> GetLeader(Int32 count = 5)
+        {
+            return _userRepo.Query().OrderByDescending(x => x.Points).Include("IntegrationUsers").Take(count);
         }
 
         private String GetPasswordHash(String password)

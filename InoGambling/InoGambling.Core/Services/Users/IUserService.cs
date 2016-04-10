@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using InoGambling.Core.Services.Users.Models;
 using InoGambling.Data.Model;
@@ -32,6 +34,8 @@ namespace InoGambling.Core.Services.Users
         IntegrationUser GetIntegrationUser(
             IntegrationType integrationType,
             String integrationUserName);
+
+        IEnumerable<User> GetLeader(Int32 count = 5);
 
         IntegrationUser GetIntegrationUser(Int64 integrationUserId);
     }
