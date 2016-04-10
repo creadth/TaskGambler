@@ -34,7 +34,7 @@ namespace InoGambling.Slack.Handlers
 
         public void Handle(TicketBetsClosed message)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

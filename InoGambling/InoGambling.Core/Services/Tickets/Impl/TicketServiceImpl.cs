@@ -30,7 +30,15 @@ namespace InoGambling.Core.Services.Tickets.Impl
 
         public async Task<DateTime> GetSyncTime()
         {
-            return await _ticketRepo.Query().MaxAsync(x => x.LastUpdateDate);
+            DateTime dateTime = DateTime.Now.AddDays(-2);
+            try
+            {
+                dateTime = await _ticketRepo.Query().MaxAsync(x => x.LastUpdateDate);
+            }
+            catch (Exception)
+            {
+            }
+            return dateTime;
         }
 
         public async Task<Ticket> GetTicket(
@@ -60,7 +68,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
         {
             try
             {
-                var project = _projectService.GetProject(integrationType, projectShortId);
+                var project = await _projectService.GetProject(integrationType, projectShortId);
                 if (project == null)
                     return new CreateTicketResult()
                     {
@@ -72,12 +80,13 @@ namespace InoGambling.Core.Services.Tickets.Impl
                     {
                         State = CreateTicketState.TicketExists
                     };
-                var user = _userService.GetUser(integrationType, userName);
+                var user = await _userService.GetUser(integrationType, userName);
                 if (user == null)
-                    return new CreateTicketResult()
-                    {
-                        State = CreateTicketState.UserNotExists
-                    };
+                {
+                    var integrationUserRes =
+                        await _userService.CreateIntegrationUser(null, userName, userName, integrationType, false);
+                    user = await _userService.GetUser(integrationUserRes.IntegrationUser.UserId);
+                }
                 ticket = _ticketRepo.Create();
                             
                 ticket.State = TicketState.Created;
@@ -86,6 +95,8 @@ namespace InoGambling.Core.Services.Tickets.Impl
                 ticket.IntegrationType = integrationType;
                 ticket.ProjectId = project.Id;
                 ticket.AssigneeUserId = user.Id;
+                ticket.ShortId = ticketShortId;
+                ticket.LastUpdateDate = createDate;
 
                 ticket = _ticketRepo.Add(ticket);
 
@@ -121,7 +132,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
                 var ticket = await GetTicket(integrationType, ticketShortId);
                 if (ticket != null)
                 {
-                    var user = _userService.GetUser(integrationType, userName);
+                    var user = await _userService.GetUser(integrationType, userName);
                     if (user != null)
                     {
                         List<Bet> invalidatedBets = new List<Bet>();

@@ -36,8 +36,12 @@ namespace InoGambling.Data.Repositories.Impl
 
         public TEntity Update(TEntity entity)
         {
-            entity = ContextFactory.GetDbContext().Set<TEntity>().Attach(entity);
-            ContextFactory.GetDbContext().Entry(entity).State = EntityState.Modified;
+            var entry = ContextFactory.GetDbContext().Entry(entity);
+            if (entry != null)
+            {
+                entity = ContextFactory.GetDbContext().Set<TEntity>().Attach(entity);
+                ContextFactory.GetDbContext().Entry(entity).State = EntityState.Modified;
+            }
             return entity;
         }
 

@@ -14,7 +14,7 @@ namespace InoGambling.Data
             try
             {
                 base.Seed(context);
-
+                return;
                 var project = new Project()
                 {
                     ShortId = "TST",
