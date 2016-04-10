@@ -153,19 +153,28 @@ namespace InoGambling.Core.Handlers
                     {
                         IsOk = false,
                         UserId = message.UserId,
-                        AdditionalMessage = " even evil cucumber never did so. Trying to bet your own tickets, really? Nice try."
+                        AdditionalMessage = " Even evil cucumber never did so. Trying to bet your own tickets, really? Nice try."
                     });
                     return;                    
                 }
                 var normalUser = _userService.GetUser(tryUser.UserId).Result;
-                //TODO: check for enough points, upd user
-                                
-                //TODO: take user points
+                if (normalUser.Points <= tryTicket.Points)
+                {
+                    _bus.Send(_slackAddress, new BetResponse
+                    {
+                        IsOk = false,
+                        UserId = message.UserId,
+                        AdditionalMessage = "seems evil cucumber took your points. Bad, bad cucumber."
+                    });
+                    return;
+                }
+                var np = normalUser.Points - tryTicket.Points;   
+                _userService.UpdateUserPoints(normalUser.Id, np);
                 _bus.Send(_slackAddress, new BetResponse
                 {
                     IsOk = true,
                     UserId = message.UserId,
-                    AdditionalMessage = $" your balance now is {normalUser.Points} Points. Good estimating!"
+                    AdditionalMessage = $" your balance now is {np} Points. Good estimating!"
                 });
             }
             

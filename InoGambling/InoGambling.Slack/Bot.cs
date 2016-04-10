@@ -74,12 +74,18 @@ namespace InoGambling.Slack
                     break;
                 case "bet":
                     if (!AssertEnoughArguments(2, argStack.Count, responseMention, message.channel)) break;
-                    _bus.Send(_coreAddress, new BetCommand
+                    var bcmd = new BetCommand
                     {
                         UserId = message.user,
-                        TaskShortId = argStack.Dequeue(),
-                        IsBetAgainst = argStack.Dequeue().ToLower() == "against"
-                    });
+                        TaskShortId = argStack.Dequeue()
+                    };
+                    var betForWord = argStack.Dequeue();
+                    if (betForWord != "against" && betForWord != "for")
+                    {
+                        SendMessage($"Evil cucumber misguided you. Syntax for bet command is bet <taskID> <against|for>", message.channel);
+                    }
+                    bcmd.IsBetAgainst = betForWord == "against";
+                    _bus.Send(_coreAddress, bcmd);
                     break;
                 case "stat":
                     _bus.Send(_coreAddress, new StatsCommand
