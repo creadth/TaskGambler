@@ -10,6 +10,7 @@ namespace InoGambling.CommonMessages.Commands.Integrations.Slack
     public class TicketPlayFinished
         : ICommand
     {
+        public TimeSpan ExecutionTime { get; set; }
         public string TicketId { get; set; }
         public string TicketLink { get; set; }
         public List<TicketResult> Results { get; set; }

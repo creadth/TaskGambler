@@ -44,9 +44,11 @@ namespace InoGambling.Slack.Handlers
         public void Handle(TicketPlayFinished message)
         {
             var totalWonPoints = message.Results.Sum(x => Math.Max(0, x.AmtChange));
+            var totalLostPoint = message.Results.Sum(x => Math.Abs(Math.Min(0, x.AmtChange)));
             var amtWinners = message.Results.Sum(x => x.HasWon ? 1 : 0);
+            var msg = $"{message.ExecutionTime.Days*24 + message.ExecutionTime.Hours}h{message.ExecutionTime.Minutes}m";
             _bot.SendBroadcast(
-                $"*Attention*! Ticket <{message.TicketLink}|{message.TicketId}> was verified! {totalWonPoints} prize points were distributed between {amtWinners} winners, check direct messages for the info. ");
+                $"*Attention*! Ticket <{message.TicketLink}|{message.TicketId}> was verified! Execution time was {msg}. {totalWonPoints} prize points were distributed between {amtWinners} winners and {totalLostPoint} Points were kept, check direct messages for the info. ");
             foreach (var r in message.Results)
             {
                 var greet = r.HasWon ? "Congratulations! You've been right" : "I regret to say, you've been wrong";

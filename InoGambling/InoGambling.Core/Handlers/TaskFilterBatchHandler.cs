@@ -132,6 +132,7 @@ namespace InoGambling.Core.Handlers
                         }).ToList();
                         _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketPlayFinished
                         {
+                            ExecutionTime = res.Ticket.ExecutionTime,
                             TicketId = res.Ticket.ShortId,
                             TicketLink = res.Ticket.Link,
                             Results = results

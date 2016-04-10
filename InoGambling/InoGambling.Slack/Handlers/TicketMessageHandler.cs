@@ -38,6 +38,8 @@ namespace InoGambling.Slack.Handlers
             {
                 var delay = message.Delay;
                 message.Delay = TimeSpan.Zero;
+                _bot.SendBroadcast(
+                    $"Task <{message.LinkToTask}|{message.TicketShortId}> started. Bets are still accepted within {delay.Days*24 + delay.Hours}h{delay.Minutes}m{delay.Seconds}s. Be fast, evil cucumber is very close!");
                 _bus.Defer(delay, message);
             }
             else
