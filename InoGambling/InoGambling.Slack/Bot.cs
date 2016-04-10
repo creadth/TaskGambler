@@ -56,9 +56,9 @@ namespace InoGambling.Slack
             //MORE TRIMS FOR THE GOD OF TRIMS
             cleanMessage = cleanMessage.TrimStart(' ', ':');
             //parse commands
-            var argStack = new Stack<string>();
-            cleanMessage.Split(' ').Select(x => x.ToLower()).ForEach(argStack.Push);
-            var cmd = argStack.Pop();
+            var argStack = new Queue<string>();
+            cleanMessage.Split(' ').Select(x => x.ToLower()).ForEach(argStack.Enqueue);
+            var cmd = argStack.Dequeue();
             //TODO: I MADE A DUMB SWITCH. YOU WANNA BE SMART? MAKE SMART SWITCH. 
             //DUMB SWITCH :
             switch (cmd)
@@ -69,7 +69,7 @@ namespace InoGambling.Slack
                     {
                         UserId = message.user,
                         UserName = client.UserLookup[message.user].name,
-                        YouTrackLogin = argStack.Pop()
+                        YouTrackLogin = argStack.Dequeue()
                     });
                     break;
                 case "bet":
@@ -77,8 +77,8 @@ namespace InoGambling.Slack
                     _bus.Send(_coreAddress, new BetCommand
                     {
                         UserId = message.user,
-                        TaskShortId = argStack.Pop(),
-                        IsBetAgainst = argStack.Pop().ToLower() == "against"
+                        TaskShortId = argStack.Dequeue(),
+                        IsBetAgainst = argStack.Dequeue().ToLower() == "against"
                     });
                     break;
                 case "stat":
@@ -97,7 +97,7 @@ namespace InoGambling.Slack
 
         protected bool AssertEnoughArguments(int desired, int actually, string uMention, string chan)
         {
-            var res = desired < actually;
+            var res = actually < desired;
             if (!res)
             {
                 SendMessage(
@@ -110,7 +110,6 @@ namespace InoGambling.Slack
         #region Nice and warm methods
         public void Dispose()
         {
-            client.CloseSocket();
         }
 
         public bool SendMessage(string message, string recepient)
