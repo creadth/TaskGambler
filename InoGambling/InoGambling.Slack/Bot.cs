@@ -97,7 +97,7 @@ namespace InoGambling.Slack
 
         protected bool AssertEnoughArguments(int desired, int actually, string uMention, string chan)
         {
-            var res = actually < desired;
+            var res = desired <= actually;
             if (!res)
             {
                 SendMessage(
