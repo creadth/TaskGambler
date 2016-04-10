@@ -18,7 +18,8 @@ namespace InoGambling.Core.Handlers
     public class SlackHandler
         : IHandleMessages<RegisterCommand>,
           IHandleMessages<BetCommand>,
-          IHandleMessages<StatsCommand>
+          IHandleMessages<StatsCommand>,
+          IHandleMessages<GetLeaderboardCommand>
 
     {
         private IBus _bus;
@@ -216,6 +217,19 @@ namespace InoGambling.Core.Handlers
             message.Points = normalUser.Points;
             _bus.Send(_slackAddress, message);
 
+        }
+
+        public void Handle(GetLeaderboardCommand message)
+        {
+            _bus.Send(_slackAddress, new Leaderboard
+            {
+                Entries = _userService.GetLeader().Select(x => new LeaderboardEntry
+                {
+                    UserId = x.IntegrationUsers.FirstOrDefault(c => c.Type == IntegrationType.Slack)?.Name,
+                    Points = x.Points
+                }).ToList(),
+                UserId = message.UserId
+            });
         }
     }
 }

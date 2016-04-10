@@ -12,7 +12,8 @@ namespace InoGambling.Slack.Handlers
 {
     public class UserManagementHandler
         : IHandleMessages<RegisterResult>,
-            IHandleMessages<StatsCommand>
+            IHandleMessages<StatsCommand>,
+            IHandleMessages<Leaderboard>
     {
 
         public ISlackIntegration _bot;
@@ -38,6 +39,18 @@ namespace InoGambling.Slack.Handlers
                     ? $"{message.UserId.ToSlackMention()}, you have {message.Points} Points. Good estimating!"
                     : $"{message.UserId.ToSlackMention()}, {message.AdditionalMessage}",
                 message.UserId);
+        }
+
+        public void Handle(Leaderboard message)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("Top 5 Vangas:");
+            for (var i = 0; i < message.Entries.Count; i++)
+            {
+                builder.AppendLine($"{i + 1}. {message.Entries[i].UserId.ToSlackMention()} - {message.Entries[i].Points}");
+            }
+            var s = builder.ToString();
+            _bot.SendMessage(s, message.UserId);
         }
     }
 }

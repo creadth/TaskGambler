@@ -93,6 +93,9 @@ namespace InoGambling.Slack
                         UserId = message.user
                     });
                     break;
+                case "top":
+                    _bus.Send(_coreAddress, new GetLeaderboardCommand {UserId = message.user});
+                    break;
                 default:
                     SendMessage($"{responseMention}, me like dunno wassup. wut r u talkn` bout?", message.channel);
                     break;

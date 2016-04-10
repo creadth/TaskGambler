@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Commands\Integrations\Slack\BetCommand.cs" />
     <Compile Include="Commands\Integrations\Slack\BetResponse.cs" />
+    <Compile Include="Commands\Integrations\Slack\GetLeaderboardCommand.cs" />
+    <Compile Include="Commands\Integrations\Slack\Leaderboard.cs" />
     <Compile Include="Commands\Integrations\Slack\RegisterCommand.cs" />
     <Compile Include="Commands\Integrations\Slack\RegisterResult.cs" />
     <Compile Include="Commands\Integrations\Slack\StatsCommand.cs" />
