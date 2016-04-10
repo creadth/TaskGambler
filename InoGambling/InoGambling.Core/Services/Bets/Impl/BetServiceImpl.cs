@@ -26,7 +26,8 @@ namespace InoGambling.Core.Services.Bets.Impl
             Int64 userId,
             Int64 ticketId,
             Double estimate,
-            Double points)
+            Double points,
+            Boolean isAgree)
 
         {
             try
@@ -81,6 +82,7 @@ namespace InoGambling.Core.Services.Bets.Impl
                 bet.UserId = user.Id;
                 bet.TicketId = ticket.Id;
                 bet.Estimate = estimate;
+                bet.IsAgree = isAgree;
 
                 bet.Points = points;
                 user.Points -= points;
@@ -108,7 +110,8 @@ namespace InoGambling.Core.Services.Bets.Impl
             String userName,
             String ticketShortId,
             Double estimate,
-            Double points)
+            Double points,
+            Boolean isAgree)
         {
             try
             {
@@ -163,6 +166,7 @@ namespace InoGambling.Core.Services.Bets.Impl
                 bet.UserId = user.Id;
                 bet.TicketId = ticket.Id;
                 bet.Estimate = estimate;
+                bet.IsAgree = isAgree;
                 
                 bet.Points = points;
                 user.Points -= points;
@@ -271,9 +275,55 @@ namespace InoGambling.Core.Services.Bets.Impl
             }
         }
 
-        public PlayTicketResult PlayTicket(Ticket ticket)
+        public async Task<PlayTicketResult> PlayTicket(Int64 ticketId)
         {
-            return null;
+            var result = new PlayTicketResult();
+
+            var ticket = await _ticketService.GetTicket(ticketId);
+            result.Ticket = ticket;
+
+            var execDelta = Math.Abs(ticket.Estimate - ticket.ExecutionTime.TotalMinutes);
+            var isWon = execDelta <= ticket.Estimate * Constants.WIN_ESTIMATE_DELTA / 100;
+            var bets = await _betRepo.Query().Where(x => x.TicketId == ticketId).ToArrayAsync();
+
+            var pointsForAssignee = isWon
+                ? 2*ticket.Points + (ticket.Points*Constants.RAKE_PERCENT/100*bets.Count(x => !x.IsAgree)) : 0;
+            var pointsForAssigneeDisplay = isWon ? pointsForAssignee - ticket.Points : 0;
+
+            var pointsForWinners = isWon
+                ? 2 * ticket.Points : 0;
+            var pointsForWinnersDisplay = isWon ? ticket.Points : -ticket.Points;
+            var pointsForLoosersDisplay = isWon ? -ticket.Points : ticket.Points;
+
+            var asssigneeUser = await _userService.GetUser(ticket.AssigneeUserId);
+            asssigneeUser.Points += pointsForAssignee;
+            result.AssigneeReesult = new PlayTicketUserResult()
+            {
+                PointsResult = pointsForAssigneeDisplay,
+                User = asssigneeUser,
+                Win = isWon
+            };
+
+            var userResults = new List<PlayTicketUserResult>();
+            foreach (var bet in bets)
+            {
+                var user = await _userService.GetUser(bet.UserId);
+                var userWon = bet.IsAgree == isWon;
+                if (userWon)
+                {
+                    user.Points += pointsForWinners;
+                }
+                userResults.Add(new PlayTicketUserResult()
+                {
+                    User =  user,
+                    Win = userWon,
+                    PointsResult = userWon ? pointsForAssigneeDisplay : pointsForLoosersDisplay
+                });
+
+            }
+            result.PlayersResults = userResults.ToArray();
+            await _uow.CommitAsync();
+            return result;
         }
 
 

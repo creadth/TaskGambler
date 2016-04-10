@@ -15,6 +15,7 @@ namespace InoGambling.Data.Configurations
             Property(x => x.Estimate).IsRequired();
             Property(x => x.IsInvalidate).IsRequired();
             Property(x => x.IsCanceled);
+            Property(x => x.IsAgree).IsRequired();
         }
     }
 }

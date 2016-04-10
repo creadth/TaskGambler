@@ -13,14 +13,16 @@ namespace InoGambling.Core.Services.Bets
             Int64 userId, 
             Int64 ticketId, 
             Double estimate, 
-            Double points);
+            Double points,
+            Boolean isAgree);
 
         Task<MakeBetResult> MakeBet(
             IntegrationType integrationType, 
             String userName, 
             String ticketShortId, 
             Double estimate, 
-            Double points);
+            Double points,
+            Boolean isAgree);
 
         Task<CancelBetResult> CancelBet(
             Int64 betId);
@@ -30,6 +32,6 @@ namespace InoGambling.Core.Services.Bets
             String userName,
             String ticketShortId);
 
-        PlayTicketResult PlayTicket(Ticket ticket);
+        Task<PlayTicketResult> PlayTicket(Int64 ticketId);
     }
 }
