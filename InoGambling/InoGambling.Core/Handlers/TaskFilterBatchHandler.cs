@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using InoGambling.CommonMessages.Commands.Integrations;
 using InoGambling.CommonMessages.Commands.Integrations.Slack;
 using InoGambling.CommonMessages.Commands.Integrations.YouTrack;
+using InoGambling.Core.Services.Bets;
 using InoGambling.Core.Services.Projects;
 using InoGambling.Core.Services.Projects.Models;
 using InoGambling.Core.Services.Tickets;
@@ -27,16 +28,19 @@ namespace InoGambling.Core.Handlers
         public ITicketService _ticketService;
         public IProjectService _projectService;
         public IUserService _userService;
+        public IBetService _betService;
 
         public TaskFilterBatchHandler(IBus bus,
             ITicketService ticketService,
             IProjectService projectService,
-            IUserService userService)
+            IUserService userService,
+            IBetService betService)
         {
             _bus = bus;
             _ticketService = ticketService;
             _projectService = projectService;
             _userService = userService;
+            _betService = betService;
         }
 
         public void Handle(TaskFilterBatchCommand message)
@@ -103,7 +107,26 @@ namespace InoGambling.Core.Handlers
                         null);
                     //^ TODO: are we really need to pass here Start/End date?
 
-                    //TODO: temp functionality here:
+
+                    if (ticket.State == TicketState.Verified && tryTicket.State != ticket.State)
+                    {
+                        var res = _betService.PlayTicket(tryTicket.Id).Result;
+                        var results = res.PlayersResults.Select(x => new TicketResult
+                        {
+                            UserId = x.User.IntegrationUsers.FirstOrDefault(u => u.Type == IntegrationType.Slack)?.Name,
+                            AmtChange = x.PointsResult,
+                            CurrentPoints = x.User.Points,
+                            HasWon = x.Win
+                        }).ToList();
+                        _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketPlayFinished
+                        {
+                            TicketId = res.Ticket.ShortId,
+                            TicketLink = res.Ticket.Link,
+                            Results = results
+                        });
+                        return;
+                    }
+
                     if (ticket.State == TicketState.InProgress && tryTicket.State != ticket.State)
                     {
                         _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketInPlayCommand

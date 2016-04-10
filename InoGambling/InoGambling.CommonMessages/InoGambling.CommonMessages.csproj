@@ -57,6 +57,7 @@
     <Compile Include="Commands\Integrations\Slack\Tasks.cs" />
     <Compile Include="Commands\Integrations\Slack\TicketBetsClosed.cs" />
     <Compile Include="Commands\Integrations\Slack\TicketInPlayCommand.cs" />
+    <Compile Include="Commands\Integrations\Slack\TicketPlayFinished.cs" />
     <Compile Include="Commands\Integrations\SyncTimeCommand.cs" />
     <Compile Include="Commands\Integrations\YouTrack\TaskFilterBatchCommand.cs" />
     <Compile Include="Commands\Integrations\YouTrack\YoutrackDistributedRegisterCommand.cs" />
