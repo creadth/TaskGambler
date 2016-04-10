@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using InoGambling.CommonMessages.Commands.Integrations.Slack;
 using InoGambling.CommonMessages.Commands.Integrations.YouTrack;
+using InoGambling.Core.Services.Bets;
+using InoGambling.Core.Services.Bets.Models;
 using InoGambling.Core.Services.Tickets;
 using InoGambling.Core.Services.Users;
 using InoGambling.Core.Services.Users.Models;
@@ -22,14 +24,17 @@ namespace InoGambling.Core.Handlers
         private IBus _bus;
         private IUserService _userService;
         private ITicketService _ticketService;
+        private IBetService _betService;
 
         private Address _slackAddress;
         private Address _youtrackAddress;
 
-        public SlackHandler(IBus bus, IUserService userService, ITicketService ticketService)
+
+        public SlackHandler(IBus bus, IUserService userService, ITicketService ticketService, IBetService betService)
         {
             _bus = bus;
             _userService = userService;
+            _betService = betService;
             _slackAddress = new Address(C.SlackEndpoint, C.MachineName);
             _youtrackAddress = new Address(C.YouTrackEndpoint, C.MachineName);
             _ticketService = ticketService;
@@ -168,14 +173,29 @@ namespace InoGambling.Core.Handlers
                     });
                     return;
                 }
-                var np = normalUser.Points - tryTicket.Points;   
-                _userService.UpdateUserPoints(normalUser.Id, np);
-                _bus.Send(_slackAddress, new BetResponse
+                var makeBetREsult = _betService
+                    .MakeBet(normalUser.Id, tryTicket.Id, tryTicket.Estimate, tryTicket.Points, !message.IsBetAgainst).Result;
+                if (makeBetREsult.State == MakeBetState.Ok)
                 {
-                    IsOk = true,
-                    UserId = message.UserId,
-                    AdditionalMessage = $" your balance now is {np} Points. Good estimating!"
-                });
+                    var np = normalUser.Points - tryTicket.Points;
+                    _userService.UpdateUserPoints(normalUser.Id, np);
+                    _bus.Send(_slackAddress, new BetResponse
+                    {
+                        IsOk = true,
+                        UserId = message.UserId,
+                        AdditionalMessage = $" your balance now is {np} Points. Good estimating!"
+                    });
+                }
+                else
+                {
+                    _bus.Send(_slackAddress, new BetResponse
+                    {
+                        IsOk = false,
+                        UserId = message.UserId,
+                        AdditionalMessage = "evil cucumber just casted evil cucumber spell on you. Roll d20. Your ~bat~ bet died.. Bad, bad cucumber."
+                    });
+                }
+                
             }
             
 

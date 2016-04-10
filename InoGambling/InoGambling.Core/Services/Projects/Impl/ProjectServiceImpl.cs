@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using InoGambling.Core.Services.Projects.Models;
 using InoGambling.Data;
@@ -16,30 +17,27 @@ namespace InoGambling.Core.Services.Projects.Impl
             _uow = uow;
         }
 
-        public async Task<Project> GetProject(
+        public Project GetProject(
             IntegrationType integrationType,
             String projectShortId)
         {
-            return
-                await
-                    _projectRepo.Query()
-                        .FirstOrDefaultAsync(x => x.ShortId == projectShortId && x.IntegrationType == integrationType);
+            return _projectRepo.Query().FirstOrDefault(x => x.ShortId == projectShortId && x.IntegrationType == integrationType);
         }
 
-        public async Task<CreateProjectResult> CreateProject(
+        public CreateProjectResult CreateProject(
             IntegrationType integrationType,
             String projectShortId)
         {
             try
             {
-                var project = await GetProject(integrationType, projectShortId);
+                var project = GetProject(integrationType, projectShortId);
                 if (project == null)
                 {
                     project = _projectRepo.Create();
                     project.IntegrationType = integrationType;
                     project.ShortId = projectShortId;
                     project = _projectRepo.Add(project);
-                    await _uow.CommitAsync();
+                    _uow.Commit();
                     return new CreateProjectResult()
                     {
                         State = CreateProjectState.Ok,

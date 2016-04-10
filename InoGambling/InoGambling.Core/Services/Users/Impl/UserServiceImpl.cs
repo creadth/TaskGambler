@@ -21,18 +21,18 @@ namespace InoGambling.Core.Services.Users.Impl
             _uow = uow;
         }
 
-        public async Task<UserCreateResult> CreateUser(String login, String password)
+        public UserCreateResult CreateUser(String login, String password)
         {
             try
             {
-                var user = await GetUser(login);
+                var user = GetUser(login);
                 if (user == null)
                 {
                     user = _userRepo.Create();
                     user.Login = login;
                     user.Password = GetPasswordHash(password);
                     user = _userRepo.Add(user);
-                    await _uow.CommitAsync();
+                    _uow.Commit();
 
                     return new UserCreateResult()
                     {
@@ -65,13 +65,13 @@ namespace InoGambling.Core.Services.Users.Impl
             _uow.Commit();
         }
 
-        public async Task<UserCreateResult> CreateUser()
+        public UserCreateResult CreateUser()
         {
             try
             {
                 var user = _userRepo.Create();
                 user = _userRepo.Add(user);
-                await _uow.CommitAsync();
+                _uow.Commit();
 
                 return new UserCreateResult()
                 {
@@ -88,39 +88,39 @@ namespace InoGambling.Core.Services.Users.Impl
             }
         }
 
-        public async Task<User> GetUser(Int64 id, Boolean includeIntegrationUsers = false)
+        public User GetUser(Int64 id, Boolean includeIntegrationUsers = false)
         {
             var query = _userRepo.Query();
             if (includeIntegrationUsers)
             {
                 query = query.Include("IntegrationUsers");
             }
-            return await query.FirstOrDefaultAsync(x => x.Id == id);
+            return query.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<User> GetUser(String login, Boolean includeIntegrationUsers = false)
+        public User GetUser(String login, Boolean includeIntegrationUsers = false)
         {
             var query = _userRepo.Query();
             if (includeIntegrationUsers)
             {
                 query = query.Include("IntegrationUsers");
             }
-            return await query.FirstOrDefaultAsync(x => x.Login == login);
+            return query.FirstOrDefault(x => x.Login == login);
         }
 
-        public async Task<User> GetUser(IntegrationType integrationType, String name)
+        public User GetUser(IntegrationType integrationType, String name)
         {
-            return await 
+            return
                 _userRepo.Query()
                     .Include("IntegrationUsers")
-                    .FirstOrDefaultAsync(x => x.IntegrationUsers.Any(y => y.Type == integrationType && y.Name == name));
+                    .FirstOrDefault(x => x.IntegrationUsers.Any(y => y.Type == integrationType && y.Name == name));
         }
 
-        public async Task<UserLoginResult> UserLogin(String login, String password)
+        public UserLoginResult UserLogin(String login, String password)
         {
             try
             {
-                var user = await GetUser(login);
+                var user = GetUser(login);
                 if (user != null)
                 {
                     if (user.Password == GetPasswordHash(password))
@@ -157,7 +157,7 @@ namespace InoGambling.Core.Services.Users.Impl
             }
         }
 
-        public async Task<CreateIntegrationUserResult> CreateIntegrationUser(
+        public CreateIntegrationUserResult CreateIntegrationUser(
             Int64? userId,
             String integrationUserName,
             String integrationUserDisplayName,
@@ -168,7 +168,7 @@ namespace InoGambling.Core.Services.Users.Impl
             {
                 if (!userId.HasValue)
                 {
-                    var integrationUser = await GetIntegrationUser(type, integrationUserName);
+                    var integrationUser = GetIntegrationUser(type, integrationUserName);
                     if (integrationUser != null)
                     {
                         return new CreateIntegrationUserResult()
@@ -177,7 +177,7 @@ namespace InoGambling.Core.Services.Users.Impl
                         };
                     }
 
-                    var userCreateResult = await CreateUser();
+                    var userCreateResult = CreateUser();
                     if (userCreateResult.State != UserCreateState.Ok)
                     {
                         return new CreateIntegrationUserResult()
@@ -187,7 +187,7 @@ namespace InoGambling.Core.Services.Users.Impl
                     }
                     userId = userCreateResult.UserId;
                 }
-                var user = await GetUser(userId.Value, true);
+                var user = GetUser(userId.Value, true);
                 if (user != null)
                 {
                     if (user.IntegrationUsers.All(x => x.Type != type))
@@ -199,7 +199,7 @@ namespace InoGambling.Core.Services.Users.Impl
                         integrationUser.UserId = user.Id;
                         integrationUser.IsForbidden = true;
                         integrationUser = _integrationUserRepo.Add(integrationUser);
-                        await _uow.CommitAsync();
+                        _uow.Commit();
 
                         return new CreateIntegrationUserResult()
                         {
@@ -227,7 +227,7 @@ namespace InoGambling.Core.Services.Users.Impl
             }
         }
 
-        public async Task<UpdateIntegrationUserResult> UpdateIntegrationUser(
+        public UpdateIntegrationUserResult UpdateIntegrationUser(
             Int64 userId,
             String integrationUserName,
             String integrationUserDisplayName,
@@ -236,7 +236,7 @@ namespace InoGambling.Core.Services.Users.Impl
         {
             try
             {
-                var user = await GetUser(userId, true);
+                var user = GetUser(userId, true);
                 if (user != null)
                 {
                     var integrationUser = user.IntegrationUsers.FirstOrDefault(x => x.Type == type);
@@ -246,7 +246,7 @@ namespace InoGambling.Core.Services.Users.Impl
                         integrationUser.DisplayName = integrationUserDisplayName;
                         integrationUser.IsForbidden = isForbidden;
                         integrationUser = _integrationUserRepo.Update(integrationUser);
-                        await _uow.CommitAsync();
+                        _uow.Commit();
 
                         return new UpdateIntegrationUserResult()
                         {
@@ -274,19 +274,18 @@ namespace InoGambling.Core.Services.Users.Impl
             }
         }
 
-        public async Task<IntegrationUser> GetIntegrationUser(
+        public IntegrationUser GetIntegrationUser(
             IntegrationType integrationType,
             String integrationUserName)
         {
             return
-                await
                     _integrationUserRepo.Query()
-                        .FirstOrDefaultAsync(x => x.Type == integrationType && x.Name == integrationUserName);
+                        .FirstOrDefault(x => x.Type == integrationType && x.Name == integrationUserName);
         }
 
-        public async Task<IntegrationUser> GetIntegrationUser(Int64 integrationUserId)
+        public IntegrationUser GetIntegrationUser(Int64 integrationUserId)
         {
-            return await _integrationUserRepo.GetById(integrationUserId);
+            return _integrationUserRepo.GetById(integrationUserId);
         }
 
         private String GetPasswordHash(String password)

@@ -28,12 +28,12 @@ namespace InoGambling.Core.Services.Tickets.Impl
             _uow = uow;
         }
 
-        public async Task<DateTime> GetSyncTime()
+        public DateTime GetSyncTime()
         {
             DateTime dateTime = DateTime.Now.AddDays(-2);
             try
             {
-                dateTime = await _ticketRepo.Query().MaxAsync(x => x.LastUpdateDate);
+                dateTime = _ticketRepo.Query().Max(x => x.LastUpdateDate);
             }
             catch (Exception)
             {
@@ -41,23 +41,22 @@ namespace InoGambling.Core.Services.Tickets.Impl
             return dateTime;
         }
 
-        public async Task<Ticket> GetTicket(
+        public Ticket GetTicket(
             Int64 id)
         {
-            return await _ticketRepo.GetById(id);
+            return _ticketRepo.GetById(id);
         }
 
-        public async Task<Ticket> GetTicket(
+        public Ticket GetTicket(
             IntegrationType integrationType,
             String ticketShortId)
         {
             return
-                await
                     _ticketRepo.Query()
-                        .FirstOrDefaultAsync(x => x.ShortId == ticketShortId && x.IntegrationType == integrationType);
+                        .FirstOrDefault(x => x.ShortId == ticketShortId && x.IntegrationType == integrationType);
         }
 
-        public async Task<CreateTicketResult> CreateTicket(
+        public CreateTicketResult CreateTicket(
             IntegrationType integrationType,
             String projectShortId,
             String ticketShortId,
@@ -69,24 +68,24 @@ namespace InoGambling.Core.Services.Tickets.Impl
         {
             try
             {
-                var project = await _projectService.GetProject(integrationType, projectShortId);
+                var project = _projectService.GetProject(integrationType, projectShortId);
                 if (project == null)
                     return new CreateTicketResult()
                     {
                         State = CreateTicketState.ProjectNotExists
                     };
-                var ticket = await GetTicket(integrationType, ticketShortId);
+                var ticket = GetTicket(integrationType, ticketShortId);
                 if (ticket != null)
                     return new CreateTicketResult()
                     {
                         State = CreateTicketState.TicketExists
                     };
-                var user = await _userService.GetUser(integrationType, userName);
+                var user = _userService.GetUser(integrationType, userName);
                 if (user == null)
                 {
                     var integrationUserRes =
-                        await _userService.CreateIntegrationUser(null, userName, userName, integrationType, false);
-                    user = await _userService.GetUser(integrationUserRes.IntegrationUser.UserId);
+                        _userService.CreateIntegrationUser(null, userName, userName, integrationType, false);
+                    user = _userService.GetUser(integrationUserRes.IntegrationUser.UserId);
                 }
                 ticket = _ticketRepo.Create();
                             
@@ -102,7 +101,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
 
                 ticket = _ticketRepo.Add(ticket);
 
-                await _uow.CommitAsync();
+                _uow.Commit();
                 return new CreateTicketResult()
                 {
                     State = CreateTicketState.Ok,
@@ -117,8 +116,8 @@ namespace InoGambling.Core.Services.Tickets.Impl
                 };
             }
         }
-
-        public async Task<UpdateTicketResult> UpdateTicket(
+    
+        public UpdateTicketResult UpdateTicket(
             IntegrationType integrationType,
             String ticketShortId,
             String userName,
@@ -131,17 +130,17 @@ namespace InoGambling.Core.Services.Tickets.Impl
         {
             try
             {
-                var ticket = await GetTicket(integrationType, ticketShortId);
+                var ticket = GetTicket(integrationType, ticketShortId);
                 if (ticket != null)
                 {
-                    var user = await _userService.GetUser(integrationType, userName);
+                    var user = _userService.GetUser(integrationType, userName);
                     if (user != null)
                     {
                         List<Bet> invalidatedBets = new List<Bet>();
                         //if user changed we invalidate all previous bets
                         if (ticket.AssigneeUserId != user.Id)
                         {
-                            invalidatedBets.AddRange(await InvalidateBetsForTicket(ticket.Id));
+                            //invalidatedBets.AddRange(InvalidateBetsForTicket(ticket.Id));
                         }
 
                         switch (state)
@@ -150,13 +149,9 @@ namespace InoGambling.Core.Services.Tickets.Impl
                             case TicketState.None:
                             case TicketState.Created:
                             case TicketState.ToDo:
-                                invalidatedBets.AddRange(await InvalidateBetsForTicket(ticket.Id));
+                                //invalidatedBets.AddRange(InvalidateBetsForTicket(ticket.Id));
                                 break;
                             case TicketState.InProgress:
-                                if (ticket.State != TicketState.OnHold)
-                                {
-                                    invalidatedBets.AddRange(await InvalidateBetsForTicket(ticket.Id));
-                                }
                                 break;
                             case TicketState.OnHold:
                                 if (ticket.State == TicketState.InProgress)
@@ -174,7 +169,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
 
                         _ticketRepo.Update(ticket);
 
-                        await _uow.CommitAsync();
+                        _uow.Commit();
 
                         return new UpdateTicketResult()
                         {
@@ -203,23 +198,23 @@ namespace InoGambling.Core.Services.Tickets.Impl
             }
         }
 
-        public async Task<IEnumerable<Bet>> InvalidateBetsForTicket(Int64 ticketId)
+        public IEnumerable<Bet> InvalidateBetsForTicket(Int64 ticketId)
         {
-            var bets = await _betRepo.Query().Where(x => x.TicketId == ticketId && x.IsInvalidate).ToArrayAsync();
+            var bets = _betRepo.Query().Where(x => x.TicketId == ticketId && x.IsInvalidate).ToArray();
             bets.ForEach(x => x.IsInvalidate = true);
             //entities alredy in the db context, so there is no need to push them into repo.Update() method;
             return bets;
 
         }
 
-        public async Task<Boolean> IsTicketAllBetsAreOff(Int64 ticketId)
+        public Boolean IsTicketAllBetsAreOff(Int64 ticketId)
         {
-            return IsTicketAllBetsAreOff(await GetTicket(ticketId));
+            return IsTicketAllBetsAreOff(GetTicket(ticketId));
         }
 
-        public async Task<Boolean> IsTicketAllBetsAreOff(IntegrationType integrationType, String ticketShortId)
+        public Boolean IsTicketAllBetsAreOff(IntegrationType integrationType, String ticketShortId)
         {
-            return IsTicketAllBetsAreOff(await GetTicket(integrationType, ticketShortId)); 
+            return IsTicketAllBetsAreOff(GetTicket(integrationType, ticketShortId)); 
         }
 
     public Boolean IsTicketAllBetsAreOff(Ticket ticket)

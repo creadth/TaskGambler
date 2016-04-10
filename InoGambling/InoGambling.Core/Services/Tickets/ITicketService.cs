@@ -8,16 +8,16 @@ namespace InoGambling.Core.Services.Tickets
     public interface ITicketService
     {
 
-        Task<DateTime> GetSyncTime();
+        DateTime GetSyncTime();
 
-        Task<Ticket> GetTicket(
+        Ticket GetTicket(
             Int64 id);
 
-        Task<Ticket> GetTicket(
+        Ticket GetTicket(
             IntegrationType integrationType,
             String ticketShortId);
 
-        Task<CreateTicketResult> CreateTicket(
+        CreateTicketResult CreateTicket(
             IntegrationType integrationType,
             String projectShortId,
             String ticketShortId,
@@ -27,7 +27,7 @@ namespace InoGambling.Core.Services.Tickets
             DateTime createDate,
             double points);
 
-        Task<UpdateTicketResult> UpdateTicket(
+        UpdateTicketResult UpdateTicket(
             IntegrationType integrationType,
             String ticketShortId,
             String userName,
@@ -38,8 +38,8 @@ namespace InoGambling.Core.Services.Tickets
             DateTime? startDate,
             DateTime? endDate);
 
-        Task<Boolean> IsTicketAllBetsAreOff(Int64 ticketId);
-        Task<Boolean> IsTicketAllBetsAreOff(IntegrationType integrationType, String ticketShortId);
+        Boolean IsTicketAllBetsAreOff(Int64 ticketId);
+        Boolean IsTicketAllBetsAreOff(IntegrationType integrationType, String ticketShortId);
         Boolean IsTicketAllBetsAreOff(Ticket ticket);
 
     }

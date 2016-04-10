@@ -107,7 +107,7 @@ namespace InoGambling.Core.Handlers
                         continue;
                     }
 
-                    _ticketService.UpdateTicket(IntegrationType.Youtrack,
+                    var updateResult = _ticketService.UpdateTicket(IntegrationType.Youtrack,
                         ticket.ShortId,
                         ticket.AssigneeName,
                         ticket.Estimation,
@@ -115,7 +115,7 @@ namespace InoGambling.Core.Handlers
                         ticket.Link,
                         ticket.UpdatedTime,
                         null,
-                        null);
+                        null).Result;
                     //^ TODO: are we really need to pass here Start/End date?
 
 

@@ -7,32 +7,32 @@ namespace InoGambling.Core.Services.Users
 {
     public interface IUserService
     {
-        Task<UserCreateResult> CreateUser(String login, String password);
-        Task<UserCreateResult> CreateUser();
-        Task<User> GetUser(Int64 id, Boolean includeIntegrationUsers = false);
-        Task<User> GetUser(String login, Boolean includeIntegrationUsers = false);
-        Task<User> GetUser(IntegrationType integrationType, String name);
-        Task<UserLoginResult> UserLogin(String login, String password);
+        UserCreateResult CreateUser(String login, String password);
+        UserCreateResult CreateUser();
+        User GetUser(Int64 id, Boolean includeIntegrationUsers = false);
+        User GetUser(String login, Boolean includeIntegrationUsers = false);
+        User GetUser(IntegrationType integrationType, String name);
+        UserLoginResult UserLogin(String login, String password);
         void UpdateUserPoints(Int64 userId, Double points);
 
-        Task<CreateIntegrationUserResult> CreateIntegrationUser(
+        CreateIntegrationUserResult CreateIntegrationUser(
             Int64? userId,
             String integrationUserName,
             String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden);
 
-        Task<UpdateIntegrationUserResult> UpdateIntegrationUser(
+        UpdateIntegrationUserResult UpdateIntegrationUser(
             Int64 userId,
             String integrationUserName,
             String integrationUserDisplayName,
             IntegrationType type,
             Boolean isForbidden);
 
-        Task<IntegrationUser> GetIntegrationUser(
+        IntegrationUser GetIntegrationUser(
             IntegrationType integrationType,
             String integrationUserName);
 
-        Task<IntegrationUser> GetIntegrationUser(Int64 integrationUserId);
+        IntegrationUser GetIntegrationUser(Int64 integrationUserId);
     }
 }

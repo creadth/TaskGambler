@@ -8,7 +8,7 @@ namespace InoGambling.Data.Repositories
 {
     public interface IRepository<TEntity> where TEntity : EntityBase
     {
-        Task<TEntity> GetById(Int64 id);
+        TEntity GetById(Int64 id);
         IQueryable<TEntity> Query();
         TEntity Create();
         TEntity Add(TEntity entity);

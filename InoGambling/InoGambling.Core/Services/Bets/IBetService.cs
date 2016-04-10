@@ -9,14 +9,14 @@ namespace InoGambling.Core.Services.Bets
 {
     public interface IBetService
     {
-        Task<MakeBetResult> MakeBet(
+        MakeBetResult MakeBet(
             Int64 userId, 
             Int64 ticketId, 
             Double estimate, 
             Double points,
             Boolean isAgree);
 
-        Task<MakeBetResult> MakeBet(
+        MakeBetResult MakeBet(
             IntegrationType integrationType, 
             String userName, 
             String ticketShortId, 
@@ -24,14 +24,14 @@ namespace InoGambling.Core.Services.Bets
             Double points,
             Boolean isAgree);
 
-        Task<CancelBetResult> CancelBet(
+        CancelBetResult CancelBet(
             Int64 betId);
 
-        Task<CancelBetResult> CancelBet(
+        CancelBetResult CancelBet(
             IntegrationType integrationType,
             String userName,
             String ticketShortId);
 
-        Task<PlayTicketResult> PlayTicket(Int64 ticketId);
+        PlayTicketResult PlayTicket(Int64 ticketId);
     }
 }

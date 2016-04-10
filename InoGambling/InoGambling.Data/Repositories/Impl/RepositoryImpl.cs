@@ -14,9 +14,9 @@ namespace InoGambling.Data.Repositories.Impl
             _factory = factory;
         }
 
-        public async Task<TEntity> GetById(Int64 id)
+        public TEntity GetById(Int64 id)
         {
-            return await ContextFactory.GetDbContext().Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
+            return ContextFactory.GetDbContext().Set<TEntity>().FirstOrDefault(x => x.Id == id);
         }
 
         public IQueryable<TEntity> Query()
