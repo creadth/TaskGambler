@@ -58,7 +58,6 @@ namespace InoGambling.Core.Handlers
                 //was already checked and confirmed as existed
                 if (message.YoutrackConfirmed)
                 {
-                    //TODO: proper reg
                     var youtrackRes = _userService.CreateIntegrationUser(
                         null,
                         message.YouTrackLogin,
@@ -71,6 +70,8 @@ namespace InoGambling.Core.Handlers
                         SendUnknownErrorMessageForRegister(message.UserId);
                         return;
                     }
+                    _userService.UpdateUserPoints(youtrackRes.IntegrationUser.UserId, C.StartingPoints);
+                    tryYouTrackUser = youtrackRes.IntegrationUser;
                 }
                 else
                 {
