@@ -71,7 +71,6 @@ namespace InoGambling.Core.Handlers
                         SendUnknownErrorMessageForRegister(message.UserId);
                         return;
                     }
-                    _userService.UpdateUserPoints(youtrackRes.IntegrationUser.UserId, C.StartingPoints);
                     tryYouTrackUser = youtrackRes.IntegrationUser;
                 }
                 else
@@ -93,6 +92,7 @@ namespace InoGambling.Core.Handlers
                 SendUnknownErrorMessageForRegister(message.UserId);
                 return;
             }
+            _userService.UpdateUserPoints(tryYouTrackUser.UserId, C.StartingPoints);
             _bus.Send(_slackAddress, new RegisterResult
             {
                 UserId = message.UserId,
