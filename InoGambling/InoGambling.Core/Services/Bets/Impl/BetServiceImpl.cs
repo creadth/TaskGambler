@@ -271,7 +271,12 @@ namespace InoGambling.Core.Services.Bets.Impl
             }
         }
 
-        
+        public PlayTicketResult PlayTicket(Ticket ticket)
+        {
+            return null;
+        }
+
+
 
         private readonly IBetRepository _betRepo;
         private readonly IUserService _userService;

@@ -29,5 +29,7 @@ namespace InoGambling.Core.Services.Bets
             IntegrationType integrationType,
             String userName,
             String ticketShortId);
+
+        PlayTicketResult PlayTicket(Ticket ticket);
     }
 }

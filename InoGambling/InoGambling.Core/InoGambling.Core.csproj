@@ -96,6 +96,7 @@
     <Compile Include="Services\Bets\Impl\BetServiceImpl.cs" />
     <Compile Include="Services\Bets\Models\CancelBetResult.cs" />
     <Compile Include="Services\Bets\Models\MakeBetResult.cs" />
+    <Compile Include="Services\Bets\Models\PlayTicketResult.cs" />
     <Compile Include="Services\Projects\Impl\ProjectServiceImpl.cs" />
     <Compile Include="Services\Projects\IProjectService.cs" />
     <Compile Include="Services\Projects\Models\CreateProjectResult.cs" />
