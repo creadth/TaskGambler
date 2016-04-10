@@ -79,12 +79,23 @@ namespace InoGambling.Core.Handlers
                             ticket.AssigneeName,
                             ticket.Estimation,
                             ticket.Link,
-                            ticket.CreateTime).Result;
+                            ticket.CreateTime,
+                            Math.Ceiling(2d * ticket.Estimation / 60d)
+                            ).Result;
                         if (res.State != CreateTicketState.Ok)
                         {
                             //TODO: log error?
                             continue;
                         }
+                        _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketInPlayCommand
+                        {
+                            TicketShortId = ticket.ShortId,
+                            TaskSummary = ticket.Summary,
+                            AssigneeName = ticket.AssigneeName,
+                            Estimation = ticket.Estimation,
+                            Points = res.Ticket.Points,
+                            LinkToTask = ticket.Link
+                        });
 
                         tryTicket = res.Ticket;
                     }
@@ -135,7 +146,7 @@ namespace InoGambling.Core.Handlers
                             TaskSummary = ticket.Summary,
                             AssigneeName = ticket.AssigneeName,
                             Estimation = ticket.Estimation,
-                            Points = ticket.Estimation * 2 / 60,
+                            Points = tryTicket.Points,
                             LinkToTask = ticket.Link
                         });
 

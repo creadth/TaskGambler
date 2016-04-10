@@ -18,6 +18,6 @@ namespace InoGambling.CommonMessages.Commands.Integrations.Slack
         public string TaskSummary { get; set; }
         public double Estimation { get; set; }
         public string LinkToTask { get; set; }
-        public int Points { get; set; }
+        public double Points { get; set; }
     }
 }

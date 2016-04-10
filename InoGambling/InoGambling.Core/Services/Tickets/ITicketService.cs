@@ -24,7 +24,8 @@ namespace InoGambling.Core.Services.Tickets
             String userName,
             Double estimate,
             String link,
-            DateTime createDate);
+            DateTime createDate,
+            double points);
 
         Task<UpdateTicketResult> UpdateTicket(
             IntegrationType integrationType,

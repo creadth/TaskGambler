@@ -64,7 +64,8 @@ namespace InoGambling.Core.Services.Tickets.Impl
             String userName,
             Double estimate,
             String link,
-            DateTime createDate)
+            DateTime createDate,
+            Double points)
         {
             try
             {
@@ -97,6 +98,7 @@ namespace InoGambling.Core.Services.Tickets.Impl
                 ticket.AssigneeUserId = user.Id;
                 ticket.ShortId = ticketShortId;
                 ticket.LastUpdateDate = createDate;
+                ticket.Points = points;
 
                 ticket = _ticketRepo.Add(ticket);
 
