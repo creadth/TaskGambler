@@ -85,7 +85,6 @@ namespace InoGambling.Core.Services.Bets.Impl
                 bet.IsAgree = isAgree;
 
                 bet.Points = points;
-                user.Points -= points;
 
                 bet = _betRepo.Add(bet);
                 await _uow.CommitAsync();
