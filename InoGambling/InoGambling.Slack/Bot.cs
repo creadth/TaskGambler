@@ -64,7 +64,6 @@ namespace InoGambling.Slack
             switch (cmd)
             {
                 case "reg":
-                    //TODO: reg operation
                     if (!AssertEnoughArguments(1, argStack.Count, responseMention, message.channel)) break;
                     _bus.Send(_coreAddress, new RegisterCommand
                     {
@@ -74,7 +73,6 @@ namespace InoGambling.Slack
                     });
                     break;
                 case "bet":
-                    //TODO: bet coomand
                     if (!AssertEnoughArguments(2, argStack.Count, responseMention, message.channel)) break;
                     _bus.Send(_coreAddress, new BetCommand
                     {
@@ -84,7 +82,10 @@ namespace InoGambling.Slack
                     });
                     break;
                 case "stat":
-                    //TODO: stat command
+                    _bus.Send(_coreAddress, new StatsCommand
+                    {
+                        UserId = message.user
+                    });
                     break;
                 default:
                     SendMessage($"{responseMention}, me like dunno wassup. wut r u talkn` bout?", message.channel);
