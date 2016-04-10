@@ -76,23 +76,13 @@ namespace InoGambling.Core.Handlers
                             ticket.Estimation,
                             ticket.Link,
                             ticket.CreateTime).Result;
-                        if (res.State == CreateTicketState.Ok)
+                        if (res.State != CreateTicketState.Ok)
                         {
-#if DEBUG
-                            Console.WriteLine("Sending TicketInPlayCommand to slack endpoint...");
-#endif
-                            //TODO: add actualy logic. Just a stab here
-                            _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketInPlayCommand
-                            {
-                                TicketShortId = ticket.ShortId,
-                                TaskSummary = ticket.Summary,
-                                AssigneeName = ticket.AssigneeName,
-                                Estimation = ticket.Estimation,
-                                Points = ticket.Estimation * 2/60,
-                                LinkToTask = ticket.Link
-                            });
+                            //TODO: log error?
+                            continue;
                         }
-                        continue;
+
+                        tryTicket = res.Ticket;
                     }
 
                     //check assignee
@@ -116,6 +106,16 @@ namespace InoGambling.Core.Handlers
                     //TODO: temp functionality here:
                     if (ticket.State == TicketState.InProgress && tryTicket.State != ticket.State)
                     {
+                        _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketInPlayCommand
+                        {
+                            TicketShortId = ticket.ShortId,
+                            TaskSummary = ticket.Summary,
+                            AssigneeName = ticket.AssigneeName,
+                            Estimation = ticket.Estimation,
+                            Points = ticket.Estimation * 2 / 60,
+                            LinkToTask = ticket.Link
+                        });
+
 #if DEBUG
                         Console.WriteLine("Sending TicketBetsClosed command to slack...");
 #endif
@@ -125,7 +125,7 @@ namespace InoGambling.Core.Handlers
                             TaskSummary = ticket.Summary,
                             AssigneeName = ticket.AssigneeName,
                             Estimation = ticket.Estimation,
-                            Delay = TimeSpan.FromMinutes(ticket.Estimation*0.1d),
+                            Delay = TimeSpan.FromMinutes(ticket.Estimation*C.TimeWindowEstimationPercentage),
                             LinkToTask = ticket.Link
                         });
                     }

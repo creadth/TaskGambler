@@ -17,5 +17,7 @@ namespace InoGambling.Framework
         public const int TrackerSleepDelay = 3000;
 
         public const double StartingPoints = 50;
+        public const double TimeWindowEstimationPercentage = .1d;
+
     }
 }

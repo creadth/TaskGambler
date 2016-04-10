@@ -28,6 +28,11 @@ namespace InoGambling.Core.Services.Tickets.Impl
             _uow = uow;
         }
 
+        public async Task<DateTime> GetSyncTime()
+        {
+            return await _ticketRepo.Query().MaxAsync(x => x.LastUpdateDate);
+        }
+
         public async Task<Ticket> GetTicket(
             Int64 id)
         {

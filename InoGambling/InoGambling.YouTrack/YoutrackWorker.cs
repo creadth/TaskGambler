@@ -35,6 +35,8 @@ namespace InoGambling.YouTrack
         {
             _bus = bus;
             _coreAddress = new Address(C.CoreEndpoint, C.MachineName);
+            AuthYoutrack();
+
         }
 
 
@@ -87,6 +89,8 @@ namespace InoGambling.YouTrack
                         {
                             State = ((string)t.State).ToTicketState(),
                             AssigneeName = t.AssigneeName,
+                            UpdaterName = t.UpdaterName,
+                            //TODO: should we ignore ticket with estimation set not by assignee?
                             ShortId = t.Id,
                             Estimation = estimation,
                             CreateTime = ParseYouTrackTime(t.Created),

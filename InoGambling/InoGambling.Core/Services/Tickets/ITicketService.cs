@@ -7,6 +7,9 @@ namespace InoGambling.Core.Services.Tickets
 {
     public interface ITicketService
     {
+
+        Task<DateTime> GetSyncTime();
+
         Task<Ticket> GetTicket(
             Int64 id);
 
