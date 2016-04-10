@@ -34,7 +34,19 @@ namespace InoGambling.Slack.Handlers
 
         public void Handle(TicketBetsClosed message)
         {
-            //throw new NotImplementedException();
+            if (message.Delay.TotalMinutes > 1)
+            {
+                message.Delay = TimeSpan.Zero;
+                _bus.Defer(message.Delay, message);
+            }
+            else
+            {
+                !_bot.SendBroadcast(
+                    $"Bets for  <{message.LinkToTask}|{message.TicketShortId}> are not accepted anymore!"))
+                {
+                    _bus.Defer(TimeSpan.FromSeconds(10), message);
+                }
+            }
         }
     }
 }
