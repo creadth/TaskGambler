@@ -140,16 +140,6 @@ namespace InoGambling.Core.Handlers
 
                     if (ticket.State == TicketState.InProgress && tryTicket.State != ticket.State)
                     {
-                        _bus.Send(new Address(C.SlackEndpoint, C.MachineName), new TicketInPlayCommand
-                        {
-                            TicketShortId = ticket.ShortId,
-                            TaskSummary = ticket.Summary,
-                            AssigneeName = ticket.AssigneeName,
-                            Estimation = ticket.Estimation,
-                            Points = tryTicket.Points,
-                            LinkToTask = ticket.Link
-                        });
-
 #if DEBUG
                         Console.WriteLine("Sending TicketBetsClosed command to slack...");
 #endif

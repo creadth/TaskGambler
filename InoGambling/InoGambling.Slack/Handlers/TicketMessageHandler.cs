@@ -36,8 +36,9 @@ namespace InoGambling.Slack.Handlers
         {
             if (message.Delay.TotalMinutes > 1)
             {
+                var delay = message.Delay;
                 message.Delay = TimeSpan.Zero;
-                _bus.Defer(message.Delay, message);
+                _bus.Defer(delay, message);
             }
             else
             {
