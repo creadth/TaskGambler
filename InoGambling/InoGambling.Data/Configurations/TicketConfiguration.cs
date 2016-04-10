@@ -20,7 +20,7 @@ namespace InoGambling.Data.Configurations
             Property(x => x.ExecutionTime).IsOptional();
             Property(x => x.IntegrationType).IsRequired();
             Property(x => x.Link).HasMaxLength(512).IsRequired();
-
+            Property(x => x.Points).IsRequired();
             HasMany(x => x.Bets).WithRequired().HasForeignKey(x => x.TicketId).WillCascadeOnDelete(false);
         }
     }

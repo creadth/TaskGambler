@@ -47,37 +47,36 @@ namespace InoGambling.Core.Handlers
             try {
                 foreach (var ticket in message.Tickets)
                 {
-                   Ticket tryTicket = null;
-                    //var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, ticket.ShortId).Result;
-                    //if (tryTicket == null )
+                    var tryTicket = _ticketService.GetTicket(IntegrationType.Youtrack, ticket.ShortId).Result;
+                    if (tryTicket == null)
                     {
                         if (ticket.AssigneeName == null) continue;
                         if (ticket.Estimation == 0) continue;
-                        //if (_projectService
-                        //    .CreateProject(IntegrationType.Youtrack, ticket.ProjectShortId)
-                        //    .Result
-                        //    .State == CreateProjectState.Error)
-                        //{
-                        //    continue;
-                        //}
-                        //var user = _userService.GetIntegrationUser(IntegrationType.Youtrack, ticket.AssigneeName);
-                        //if (user == null)
-                        //{
-                        //    if (_userService.CreateIntegrationUser(null, ticket.AssigneeName, ticket.AssigneeName,
-                        //        IntegrationType.Youtrack, false).Result.State == CreateIntegrationUserState.Error)
-                        //    {
-                        //        continue;
-                        //    }
-                        //}
+                        if (_projectService
+                            .CreateProject(IntegrationType.Youtrack, ticket.ProjectShortId)
+                            .Result
+                            .State == CreateProjectState.Error)
+                        {
+                            continue;
+                        }
+                        var user = _userService.GetIntegrationUser(IntegrationType.Youtrack, ticket.AssigneeName);
+                        if (user == null)
+                        {
+                            if (_userService.CreateIntegrationUser(null, ticket.AssigneeName, ticket.AssigneeName,
+                                IntegrationType.Youtrack, false).Result.State == CreateIntegrationUserState.Error)
+                            {
+                                continue;
+                            }
+                        }
 
-                        //var res = _ticketService.CreateTicket(IntegrationType.Youtrack,
-                        //    ticket.ProjectShortId,
-                        //    ticket.ShortId,
-                        //    ticket.AssigneeName,
-                        //    ticket.Estimation,
-                        //    ticket.Link,
-                        //    ticket.CreateTime).Result;
-                        //if (res.State == CreateTicketState.Ok)
+                        var res = _ticketService.CreateTicket(IntegrationType.Youtrack,
+                            ticket.ProjectShortId,
+                            ticket.ShortId,
+                            ticket.AssigneeName,
+                            ticket.Estimation,
+                            ticket.Link,
+                            ticket.CreateTime).Result;
+                        if (res.State == CreateTicketState.Ok)
                         {
 #if DEBUG
                             Console.WriteLine("Sending TicketInPlayCommand to slack endpoint...");
