@@ -88,6 +88,7 @@
     <Compile Include="ConfigureEndpoint.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Handlers\SimpleMessageHandler.cs" />
+    <Compile Include="Handlers\SlackHandler.cs" />
     <Compile Include="Handlers\SyncTimeHandler.cs" />
     <Compile Include="Handlers\TaskFilterBatchHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,20 +7,22 @@ using NServiceBus;
 
 namespace InoGambling.CommonMessages.Commands.Integrations.Slack
 {
-    public class BetCommand
-        :ICommand
+    public class BetResponse
+        : ICommand
     {
         /// <summary>
-        /// Integration user id
+        /// Represents integration user id
         /// </summary>
         public string UserId { get; set; }
+
         /// <summary>
-        /// Id of task user want to bet
+        /// Represents eiter bet was accepted successfully
         /// </summary>
-        public string TaskShortId { get; set; }
+        public bool IsOk { get; set; }
+        
         /// <summary>
-        /// Indicates either user is betting agains assignee estimate
+        /// Additional message to desplay to user in case of error
         /// </summary>
-        public bool IsBetAgainst { get; set; }
+        public string AdditionalMessage { get; set; }
     }
 }

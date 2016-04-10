@@ -16,8 +16,6 @@ namespace InoGambling.Framework
 
         public const int TrackerSleepDelay = 3000;
 
-        //Slack bot constants
-        public const String BetWord = "Ставка";
-        public const String Want = "Хочу сделать ставку";
+        public const double StartingPoints = 50;
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.Practices.ServiceLocation;
 namespace InoGambling.Slack.Handlers
 {
     public class BetResponseHandler
-        :IHandleMessages<BetCommandResponse>
+        :IHandleMessages<BetResponse>
     {
 
         private IBus _bus;
@@ -23,14 +23,20 @@ namespace InoGambling.Slack.Handlers
             _bus = bus;
         }
 
-        public void Handle(BetCommandResponse message)
+        public void Handle(BetResponse message)
         {
 #if DEBUG
-            Console.WriteLine($"Received bet command response from user <{message.Initiator}>");
+            Console.WriteLine($"Received bet command response from user <@{message.UserId}>");
 #endif
-            using (var worker = ServiceLocator.Current.GetInstance<Bot>())
+            if (message.IsOk)
             {
-                worker.SendTasks(message);
+                _bot.SendMessage($"Your bet was accepted, {message.AdditionalMessage}. Good estimating.", message.UserId);
+            }
+            else
+            {
+                _bot.SendMessage(
+                    $"Your bet was not accepted because ~evil cucumber not gonna like you~ {message.AdditionalMessage}",
+                    message.UserId);
             }
         }
     }

@@ -56,46 +56,39 @@ namespace InoGambling.Core.Services.Tickets.Impl
             try
             {
                 var project = _projectService.GetProject(integrationType, projectShortId);
-                if (project != null)
-                {
-                    var ticket = await GetTicket(integrationType, ticketShortId);
-                    if (ticket == null)
+                if (project == null)
+                    return new CreateTicketResult()
                     {
-                        var user = _userService.GetUser(integrationType, userName);
-                        if (user != null)
-                        {
-
-                            ticket = _ticketRepo.Create();
-                            
-                            ticket.State = TicketState.Created;
-                            ticket.Estimate = estimate;
-                            ticket.Link = link;
-                            ticket.IntegrationType = integrationType;
-                            ticket.ProjectId = project.Id;
-                            ticket.AssigneeUserId = user.Id;
-
-                            ticket = _ticketRepo.Add(ticket);
-
-                            await _uow.CommitAsync();
-                            return new CreateTicketResult()
-                            {
-                                State = CreateTicketState.Ok,
-                                Ticket = ticket
-                            };
-                        }
-                        return new CreateTicketResult()
-                        {
-                            State = CreateTicketState.UserNotExists
-                        };
-                    }
+                        State = CreateTicketState.ProjectNotExists
+                    };
+                var ticket = await GetTicket(integrationType, ticketShortId);
+                if (ticket != null)
                     return new CreateTicketResult()
                     {
                         State = CreateTicketState.TicketExists
                     };
-                }
+                var user = _userService.GetUser(integrationType, userName);
+                if (user == null)
+                    return new CreateTicketResult()
+                    {
+                        State = CreateTicketState.UserNotExists
+                    };
+                ticket = _ticketRepo.Create();
+                            
+                ticket.State = TicketState.Created;
+                ticket.Estimate = estimate;
+                ticket.Link = link;
+                ticket.IntegrationType = integrationType;
+                ticket.ProjectId = project.Id;
+                ticket.AssigneeUserId = user.Id;
+
+                ticket = _ticketRepo.Add(ticket);
+
+                await _uow.CommitAsync();
                 return new CreateTicketResult()
                 {
-                    State = CreateTicketState.ProjectNotExists
+                    State = CreateTicketState.Ok,
+                    Ticket = ticket
                 };
             }
             catch (Exception e)

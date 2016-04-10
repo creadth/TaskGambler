@@ -3,17 +3,24 @@ using InoGambling.Framework.Intergations.Messengers;
 using NServiceBus;
 using SlackAPI;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using InoGambling.CommonMessages.Commands.Integrations.Slack;
+using Microsoft.Practices.ObjectBuilder2;
+using SlackAPI.WebSocketMessages;
 using C = InoGambling.Framework.BeautifulConstants;
 
 namespace InoGambling.Slack
 {
     public class Bot : ISlackIntegration
     {
-        private IBus _bus;
-        private Address _coreAddress;
+        
+        private const string _slackToken = "xoxb-33255991907-GIsd17eRb8bMgLuVMrm4Uv8H";
 
-       private SlackSocketClient client;
+        private readonly IBus _bus;
+        private readonly Address _coreAddress;
+       
+        private SlackSocketClient client;
 
         public Bot(IBus bus)
         {
@@ -23,83 +30,120 @@ namespace InoGambling.Slack
 
         public void Work()
         {
-            client = new SlackSocketClient("xoxb-33255991907-GIsd17eRb8bMgLuVMrm4Uv8H");
-            client.Connect((connected) => {
-                //This is called once the client has emitted the RTM start command        
-                
-
-            }, () => {
-                //This is called once the RTM client has connected to the end point
-                client.OnHello += Client_OnHello;
-                
-                client.OnMessageReceived += Client_OnMessageReceived;                 
-                                
-            });
+            client = new SlackSocketClient(_slackToken);
+            client.OnHello += Client_OnHello;
+            client.OnMessageReceived += Client_OnMessageReceived;
+            client.Connect((c) => { });
         }
 
         private void Client_OnHello()
         {
-            _bus.Send(_coreAddress, new SimpleCommand
-            {
-                SomeShit = "Hello!"
-            });
         }
 
-        private void Client_OnMessageReceived(SlackAPI.WebSocketMessages.NewMessage obj)
+        private void Client_OnMessageReceived(NewMessage message)
         {
-            //проверить, что чувак не поставил на себя
-            if (obj.text.Contains(C.BetWord))
+            //ignore self messages
+            if (message.user == client.MyData.id) return;
+            //accept commands only from private
+            if (!client.DirectMessageLookup.ContainsKey(message.channel)) return;
+            var selfMention = $"<@{client.MyData.id}>";
+            var responseMention = $"<@{message.user}|Dude>";
+            //what a day without trim? ^_^
+            var cleanMessage = message.text.Trim();
+            //all commands should start with bot mention
+            if (!cleanMessage.StartsWith(selfMention)) return;
+            cleanMessage = cleanMessage.Replace(selfMention, string.Empty);
+            //MORE TRIMS FOR THE GOD OF TRIMS
+            cleanMessage = cleanMessage.TrimStart(' ', ':');
+            //parse commands
+            var argStack = new Stack<string>();
+            cleanMessage.Split(' ').Select(x => x.ToLower()).ForEach(argStack.Push);
+            var cmd = argStack.Pop();
+            //TODO: I MADE A DUMB SWITCH. YOU WANNA BE SMART? MAKE SMART SWITCH. 
+            //DUMB SWITCH :
+            switch (cmd)
             {
-                Int64 id;
-                Double es;
-                Double pt;
+                case "reg":
+                    //TODO: reg operation
+                    if (!AssertEnoughArguments(1, argStack.Count, responseMention, message.channel)) break;
+                    _bus.Send(_coreAddress, new RegisterCommand
+                    {
+                        UserId = message.user,
+                        UserName = client.UserLookup[message.user].name,
+                        YouTrackLogin = argStack.Pop()
+                    });
+                    break;
+                case "bet":
+                    //TODO: bet coomand
+                    if (!AssertEnoughArguments(2, argStack.Count, responseMention, message.channel)) break;
+                    _bus.Send(_coreAddress, new BetCommand
+                    {
+                        UserId = message.user,
+                        TaskShortId = argStack.Pop(),
+                        IsBetAgainst = argStack.Pop().ToLower() == "against"
+                    });
+                    break;
+                case "stat":
+                    //TODO: stat command
+                    break;
+                default:
+                    SendMessage($"{responseMention}, me like dunno wassup. wut r u talkn` bout?", message.channel);
+                    break;
+            }
 
-                Int64.TryParse(obj.text.Split( ' ', ',', '.', ':', '\t' )[1], out id);
-                Double.TryParse(obj.text.Split( ' ', ',', '.', ':', '\t' )[2], out es);
-                Double.TryParse(obj.text.Split(' ', ',', '.', ':', '\t' )[3], out pt);
-              
-                _bus.Send(_coreAddress, new BetCommand
-                {
-                    TicketId = id,
-                    Estimate = es,
-                    Points = pt//,
-                    //UserId = obj.user как передат юзера?    
-                });
-            }
-            if (obj.text.Contains(C.Want))
+        }
+        #region Divine methods
+
+        protected bool AssertEnoughArguments(int desired, int actually, string uMention, string chan)
+        {
+            var res = desired < actually;
+            if (!res)
             {
-                _bus.Send(_coreAddress, new WantBet
-                {
-                    Initiator = obj.user   
-                });
+                SendMessage(
+                    $"{uMention}! A shadow of Mordor has fallen across the Midlands. The {desired} arguments were expected for this command, but evil minions stole {desired - actually} from you.. Find them, or we all are dommed. Sincerely yours, unknown bot.",
+                    chan);
             }
+            return res;
+        }
+        #endregion
+        #region Nice and warm methods
+        public void Dispose()
+        {
+            client.CloseSocket();
+        }
+
+        public bool SendMessage(string message, string recepient)
+        {
+            //find correct slack endpoint
+            Console.WriteLine($"Post: {message}");
+            if (!client.IsConnected) return false;
+            client.PostMessage(null, channelId: GetChanId(recepient), text:message, as_user:true);
+            return true;
+        }
+
+        public bool SendBroadcast(string message)
+        {
+            Console.WriteLine($"Post: {message}");
+            if (!client.IsConnected) return false;
+            foreach (var chan in client.Channels.Where(c => c.is_channel && !c.is_general && c.is_member))
+            {
+                SendMessage(message, chan.id);
+            }
+            return true;
         }
 
         /// <summary>
-        /// Post available tasks to bet for bet
+        /// Get correct channel id from whatever you pass as recepient - channel id, direct message id, user id.
         /// </summary>
-        /// <param name="message"></param>
-        public void SendTasks(BetCommandResponse message)
+        /// <param name="recepient"></param>
+        /// <returns></returns>
+        protected string GetChanId(string recepient)
         {
-            foreach (var task in message.Tasks)
-            {
-                client.PostMessage(null, message.Initiator, task.Id.ToString(), "Bot", null, false, null, false,
-                     null, null, true);
-            }
+            //I can voodoo. Kek.
+            return client.DirectMessages.FirstOrDefault(x => x.user == recepient || x.id == recepient)?.id
+                   ??
+                   client.Channels.FirstOrDefault(x => x.id == recepient)?.id;
         }
-
-        public void TaskNotification(Tasks notification)
-        {
-            foreach (var task in notification.TaskNotification)
-            {
-                client.PostMessage(null, "#general", task.Id.ToString(), "Bot", null, false, null, false,
-                     null, null, true);
-            }
-        } 
-
-        public void Dispose()
-        {
-            //todo: dispose something. Like.. really. Dispose something.
-        }
+        #endregion
     }
 }

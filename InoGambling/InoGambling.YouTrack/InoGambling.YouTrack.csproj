@@ -89,7 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureEndpoint.cs" />
+    <Compile Include="Handlers\RegisterHandler.cs" />
     <Compile Include="Handlers\SyncTimeHandler.cs" />
+    <Compile Include="Helpers\TicketStateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YoutrackWorker.cs" />
   </ItemGroup>

@@ -1,17 +1,12 @@
-﻿using System.Runtime.Remoting.Messaging;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using InoGambling.CommonMessages.Commands;
-using InoGambling.Framework;
-using InoGambling.Framework.Intergations.Trackers;
+using InoGambling.Framework.Intergations.Messengers;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NServiceBus;
 using C = InoGambling.Framework.BeautifulConstants;
-using InoGambling.Framework.Intergations.Messengers;
-using InoGambling.Slack;
 
-namespace InoGambling.YouTrack
+namespace InoGambling.Slack
 {
     /// <summary>
     /// Main entry for NServiceBus configuration
@@ -47,24 +42,17 @@ namespace InoGambling.YouTrack
             var locator = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);
             //configure dependencies here
-            container.RegisterType<ISlackIntegration, Bot>();
+            container.RegisterType<ISlackIntegration, Bot>(new ContainerControlledLifetimeManager());
             //---------^_^------
             configuration.UseContainer<UnityBuilder>(c => c.UseExistingContainer(container));
         }
 
         public void Start()
         {
-            Task.Run(() =>
+            using (var worker = ServiceLocator.Current.GetInstance<Bot>())
             {
-                while (true)
-                {
-                    using (var worker = ServiceLocator.Current.GetInstance<Bot>())
-                    {
-                        worker.Work();
-                    }
-                    Thread.Sleep(C.TrackerSleepDelay);
-                }
-            });
+                worker.Work();
+            }
         }
 
         public void Stop()
